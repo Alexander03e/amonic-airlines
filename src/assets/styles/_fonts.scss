@@ -1,0 +1,72 @@
+@use 'root' as *;
+
+@mixin tga-regular-small {
+    font-family: var(--tga-font);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-extra-small {
+    font-family: var(--tga-font);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-default {
+    font-family: var(--tga-font);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-medium {
+    font-family: var(--tga-font);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-large {
+    font-family: var(--tga-font);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-title {
+    font-family: var(--tga-font);
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-title-small {
+    font-family: var(--tga-font);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-regular-title-large {
+    font-family: var(--tga-font);
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+@mixin tga-bold {
+    font-family: var(--tga-font);
+    font-weight: 700;
+}
+
+@mixin tga-italic {
+    font-family: var(--tga-font);
+    font-weight: 500;
+}
+
+@mixin tga-italic-bold {
+    font-family: var(--tga-font);
+    font-weight: 700;
+}

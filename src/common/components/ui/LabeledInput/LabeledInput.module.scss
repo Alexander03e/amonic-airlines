@@ -1,0 +1,53 @@
+@use './src/assets/styles/fonts' as *;
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    
+    
+    .error {
+        @include tga-regular-small;
+        
+        color: var(--error-base);
+        transition: var(--transition);
+    }
+    
+    .label {
+        @include tga-regular-default;
+
+        color: var(--primary-base);
+        transition: var(--transition);
+    }
+
+    & > input {
+        margin-block: 4px 2px;
+        padding: 6px 10px;
+
+        border: 1px solid var(--primary-base);
+        border-radius: var(--gap-x1);
+        outline: 1px solid transparent;
+
+        transition: var(--transition);
+
+        &:focus {
+            border-color: var(--primary-base);
+            outline-color: var(--primary-base);
+        }
+        
+        @include tga-regular-default;
+    }
+
+    &.error {
+        .label {
+            color: var(--error-base);
+        }
+
+        & > input {
+            border-color: var(--error-base);
+            &:focus {
+                outline-color: var(--error-base);
+        }
+        }
+    }
+}

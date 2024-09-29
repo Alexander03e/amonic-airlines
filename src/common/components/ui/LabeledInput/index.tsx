@@ -1,0 +1,35 @@
+import { forwardRef, InputHTMLAttributes, ReactElement } from 'react';
+import styles from './LabeledInput.module.scss';
+import cn from 'classnames';
+import InputMask from '@mona-health/react-input-mask';
+import { Height } from 'Common/components';
+
+/**
+ * Интерфейс компонента LabeledInput.
+ * @prop {string} [label] - Текст лейбла.
+ * @prop {string} [error] - Текст ошибки.
+ * @prop {string} [mask] - Маска для инпута.
+ */
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+    label?: string;
+    error?: string;
+    mask?: string;
+}
+
+export const LabeledInput = forwardRef<HTMLInputElement, IProps>(
+    ({ label, error, mask, ...props }, ref): ReactElement => {
+        return (
+            <label className={cn(styles.wrapper, { [styles.error]: error })}>
+                {label && <span className={styles.label}>{label}</span>}
+                {!mask ? (
+                    <input ref={ref} {...props} />
+                ) : (
+                    <InputMask ref={ref} {...props} mask={mask} />
+                )}
+                <Height isOpen={Boolean(error)}>
+                    <span className={styles.error}>{error}</span>
+                </Height>
+            </label>
+        );
+    },
+);

@@ -1,0 +1,33 @@
+:root {
+    /* COLORS */
+
+    --primary-base: #196AA6;
+    --secondary-base: #F79420;
+
+    --primary-alternative: #064B66;
+    --secondary-alternative: #FAC826;
+
+    --primary-special: #132B4F;
+    --secondary-special: #EDD688;
+
+    --secondary-background: #0D4F4C;
+
+    --text-dark: #132B4F;  
+    --text-light: #FFFACB;  
+
+    --error-base: rgb(189, 0, 0);
+    
+    /* FONTS */
+
+    --tga-font: 'TeXGyreAdventor', sans-serif;
+
+    /* RADIUS/GAP */
+
+    --gap-x1: 6px;
+    --gap-x2: 8px;
+    --gap-x3: 10px;
+
+    /* TRANSITION */
+
+    --transition: 0.3s ease;
+}

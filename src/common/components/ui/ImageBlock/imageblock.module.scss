@@ -1,0 +1,24 @@
+
+
+.wrapper {
+    max-width: 100%;
+    height: auto;
+    
+    & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    };
+
+    &.small {
+        width: 150px;
+    }
+
+    &.medium {
+        width: 340px;
+    }
+
+    &.large {
+        width: 540px;
+    }
+}

@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'TeXGyreAdventor';
+    font-weight: 700;
+    font-style: normal;
+    src: url('../fonts/TeXGyreAdventor-Bold.ttf');
+    src: local('../fonts/TeXGyreAdventor-Bold'),
+    url('../fonts/TeXGyreAdventor-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TeXGyreAdventor';
+    font-weight: 700;
+    font-style: italic;
+    src: url('../fonts/TeXGyreAdventor-BoldItalic.ttf');
+    src: local('../fonts/TeXGyreAdventor-BoldItalic'),
+    url('../fonts/TeXGyreAdventor-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TeXGyreAdventor';
+    font-weight: 500;
+    font-style: italic;
+    src: url('../fonts/TeXGyreAdventor-Italic.ttf');
+    src: local('../fonts/TeXGyreAdventor-Italic'),
+    url('../fonts/TeXGyreAdventor-Italic.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TeXGyreAdventor';
+    font-weight: 500;
+    font-style: normal;
+    src: url('../fonts/TeXGyreAdventor-Regular.ttf');
+    src: local('../fonts/TeXGyreAdventor-Regular'),
+    url('../fonts/TeXGyreAdventor-Regular.ttf') format('truetype');
+}
