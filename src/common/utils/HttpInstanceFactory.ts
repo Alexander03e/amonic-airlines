@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
-import { BACKEND_URL } from "Common";
+import axios, { AxiosInstance } from 'axios';
+import { BACKEND_URL } from 'Common/consts/api';
 
 export class HttpInstanceFactory {
     private static baseInstance: AxiosInstance | null = null;
@@ -9,7 +9,7 @@ export class HttpInstanceFactory {
         this.baseInstance = axios.create({
             baseURL: BACKEND_URL,
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
         });
         return this.baseInstance;

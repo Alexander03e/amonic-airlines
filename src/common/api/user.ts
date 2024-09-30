@@ -1,5 +1,5 @@
-import { AxiosInstance } from "axios";
-import { HttpInstanceFactory } from "../utils/HttpInstanceFactory";
+import { AxiosInstance } from 'axios';
+import { HttpInstanceFactory } from '../utils/HttpInstanceFactory';
 
 export class UserApi {
     private static _instance: UserApi | null = null;
@@ -14,5 +14,9 @@ export class UserApi {
         this._instance = new UserApi();
 
         return this._instance;
+    }
+
+    async addUser() {
+        console.log(this._httpInstance);
     }
 }
