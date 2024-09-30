@@ -4,6 +4,7 @@ import { LABELS } from './consts';
 import { schema, TSignIn } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useAuthContext } from 'Common/components/provider/Auth/context';
 
 export const SignInForm = (): ReactElement => {
     const {
@@ -12,7 +13,10 @@ export const SignInForm = (): ReactElement => {
         handleSubmit,
     } = useForm<TSignIn>({ mode: 'onChange', resolver: zodResolver(schema) });
 
+    const { login } = useAuthContext();
+
     const onSubmit = (data: TSignIn) => {
+        login('mock_token');
         console.log(data);
     };
 

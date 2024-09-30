@@ -1,10 +1,9 @@
-import { ERRORS } from 'Common/consts/errors';
-import { emailSchema } from 'Common/schema';
-import { object, string, infer as zInfer } from 'zod';
+import { stringSchema } from 'Common/schema';
+import { object, infer as zInfer } from 'zod';
 
 export const schema = object({
-    email: emailSchema,
-    password: string({ message: ERRORS.REQUIRED }).min(6, { message: ERRORS.INVALID_PASSWORD }),
+    email: stringSchema,
+    password: stringSchema,
 });
 
 export type TSignIn = zInfer<typeof schema>;
