@@ -2,18 +2,21 @@ import { FC, ReactNode } from 'react';
 import styles from './modal.module.scss'; // Импортируем SCSS-модуль стилей
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOutsideClick, useScrollblock } from 'Common/hooks';
+import { useModalStore } from 'Common/store/selectors';
+import isNil from 'lodash/isNil';
+import { Icon } from '../Icon';
+import CloseIcon from 'Assets/icons/close.svg?react';
 
 interface ModalProps {
-    isOpen: boolean; // Управляет видимостью модального окна
-    onClose: () => void; // Функция для закрытия модального окна
-    title?: string; // Опциональный заголовок модального окна
+    withClose?: boolean;
     children: ReactNode; // Содержимое модального окна
 }
 
-export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: FC<ModalProps> = ({ children, withClose = true }) => {
+    const { currentModal, setCurrentModal } = useModalStore();
+
     const closeHandler = (): void => {
-        if (!onClose) return;
-        onClose();
+        setCurrentModal(null);
     };
 
     /** Блокирование прокрутки, когда окно открыто */
@@ -23,7 +26,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
     return (
         <AnimatePresence mode='wait'>
-            {isOpen && (
+            {!isNil(currentModal) && (
                 <motion.div
                     animate={{ opacity: 1, scale: 1 }}
                     className={styles.overlay}
@@ -45,6 +48,13 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
                                 ease: 'easeInOut',
                             }}
                         >
+                            {withClose && (
+                                <Icon
+                                    onClick={closeHandler}
+                                    className={styles.icon}
+                                    icon={<CloseIcon />}
+                                />
+                            )}
                             {children}
                         </motion.div>
                     </div>

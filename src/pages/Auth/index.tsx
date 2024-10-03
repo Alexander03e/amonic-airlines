@@ -1,4 +1,4 @@
-import { SignInForm } from 'Modules';
+import { SignInForm } from 'Common/components';
 import styles from './auth.module.scss';
 import { ImageBlock } from 'Common/components';
 import LogoPng from 'Assets/images/logo_large.png';

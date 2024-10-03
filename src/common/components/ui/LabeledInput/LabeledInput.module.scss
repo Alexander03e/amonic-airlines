@@ -1,6 +1,7 @@
 @use './src/assets/styles/fonts' as *;
 
 .wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -8,8 +9,10 @@
     
     .error {
         @include tga-regular-small;
+
         
         color: var(--error-base);
+        white-space: nowrap;
         transition: var(--transition);
     }
     

@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }: IProps) => {
         }
     }, []);
 
-    console.log(isAuth);
     const login = useCallback((token: string) => {
         localStorage.setItem('token', token);
         setIsAuth(true);

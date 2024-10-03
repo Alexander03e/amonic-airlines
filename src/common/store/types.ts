@@ -1,4 +1,4 @@
-export type TCurrentModal = 'signUp' | 'signIn' | 'forgotPassword' | null;
+export type TCurrentModal = '#createUser' | '#forgotPassword' | null;
 
 export interface IAppStore {
     currentModal: TCurrentModal;

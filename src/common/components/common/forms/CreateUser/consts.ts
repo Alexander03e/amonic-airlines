@@ -9,7 +9,7 @@ export const LABELS = {
 
     BUTTON: 'Зарегистрироваться',
 
-    FORM: 'Регистрация',
+    FORM: 'Создание пользователя',
 };
 
 export const MASKS = {

@@ -1,0 +1,15 @@
+.wrapper {
+    width: 100%;
+    background-color: white;
+    border: none;
+
+    .row {
+        display: flex;
+        gap: 16px;
+        width: 100%;
+
+        & > input {
+            width: 100%;
+        }
+    }
+}

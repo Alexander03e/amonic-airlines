@@ -5,12 +5,18 @@
     cursor: pointer;
 
     width: fit-content;
-    padding: 12px 16px;
+    padding: 16px 16px;
 
     border: none;
-    border-radius: 4px;
+    border-radius: var(--gap-x2);
 
     transition: all var(--transition);
+
+    &.empty {
+        padding: 0;
+        color: var(--primary-base);
+        background-color: transparent;
+    }
 
     &.fullWidth {
         width: 100%;

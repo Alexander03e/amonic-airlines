@@ -5,3 +5,5 @@ export { Modal } from './Modal';
 export { Form } from './Form';
 export { Height } from './Animation';
 export { Container } from './Container';
+export { Icon } from './Icon';
+export { LabeledDropdown } from './LabeledDropdown';

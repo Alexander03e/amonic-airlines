@@ -3,6 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "homepage": "https://alexander03e.github.io/amonic-airlines/",
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
@@ -19,8 +20,10 @@
         "classnames": "^2.5.1",
         "framer-motion": "^11.9.0",
         "immer": "^10.1.1",
+        "lodash": "^4.17.21",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "react-dropdown": "^1.11.0",
         "react-hook-form": "^7.53.0",
         "react-router-dom": "^6.26.2",
         "sass": "^1.79.1",

@@ -5,6 +5,9 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react(), svgr()],
+    build: {
+        outDir: './build',
+    },
     resolve: {
         alias: {
             Assets: resolve(__dirname, '/src/assets'),
@@ -13,4 +16,5 @@ export default defineConfig({
             Common: resolve(__dirname, '/src/common'),
         },
     },
+    base: '/amonic-airlines',
 });

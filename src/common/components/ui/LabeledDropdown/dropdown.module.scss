@@ -1,0 +1,86 @@
+@use './src/assets/styles/fonts' as *;
+
+.out {
+    width: 100%;
+
+    .label {
+        @include tga-regular-default;
+
+        color: var(--primary-base);   
+        transition: var(--transition);
+    }
+
+
+    &.errorOut {
+        .label {
+            color: var(--error-base)!important;
+        }
+    }
+}
+
+.wrapper {
+    outline: none;
+
+    &.error {
+        .control {
+            margin-top: 4px;
+            border-color: var(--error-base)!important;
+        }
+
+        .placeholder {
+            color: var(--error-base)!important;
+            transition: color var(--transition);
+        }
+
+        .arrow {
+            border-color: var(--error-base) transparent var(--error-base)!important;
+            & > span {
+            }
+        }
+
+        .menu {
+            border-color: var(--error-base)!important;
+
+            & > div {
+                color: var(--error-base);
+            }
+        }
+    }
+}
+
+.control {
+    padding-block: 10px!important;
+    border: 1px solid var(--primary-base)!important;
+    border-radius: var(--gap-x1)!important;
+    transition: var(--transition)!important;
+}
+
+.menu {
+    transform: translateY(4px);
+    border: 1px solid var(--primary-base)!important;
+    border-radius: var(--gap-x1);
+
+    & > div {
+        color: var(--primary-base);
+    }
+}
+
+.error {
+    @include tga-regular-small;
+    
+    color: var(--error-base);
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+:global(.is-selected) {
+    color: white!important;
+    background-color: var(--primary-base)!important;
+}
+
+.placeholder {
+    color: var(--primary-base)!important;   
+    background-color: transparent!important;
+
+    @include tga-regular-default;
+}
