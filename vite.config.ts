@@ -5,8 +5,12 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react(), svgr()],
-    build: {
-        outDir: './build',
+    css: {
+        preprocessorOptions: {
+            scss: {
+                silenceDeprecations: ['legacy-js-api'],
+            },
+        },
     },
     resolve: {
         alias: {
@@ -16,5 +20,4 @@ export default defineConfig({
             Common: resolve(__dirname, '/src/common'),
         },
     },
-    base: '/amonic-airlines',
 });

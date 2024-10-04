@@ -6,7 +6,7 @@ import { QueryProvider } from 'Common/components/provider/Query';
 import { InitProvider } from 'Common/components/provider/Init/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter>
         <QueryProvider>
             <AuthProvider>
                 <InitProvider>
