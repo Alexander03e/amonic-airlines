@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import styles from './modal.module.scss'; // Импортируем SCSS-модуль стилей
+import styles from './modal.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOutsideClick, useScrollblock } from 'Common/hooks';
 import { useModalStore } from 'Common/store/app/selectors';
