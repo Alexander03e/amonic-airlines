@@ -1,11 +1,12 @@
 import { FC, ReactNode } from 'react';
-import styles from './modal.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOutsideClick, useScrollblock } from 'Common/hooks';
 import { useModalStore } from 'Common/store/app/selectors';
 import isNil from 'lodash/isNil';
 import { Icon } from '../Icon';
 import CloseIcon from 'Assets/icons/close.svg?react';
+
+import styles from './modal.module.scss';
 
 interface ModalProps {
     withClose?: boolean;
