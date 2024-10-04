@@ -5,7 +5,12 @@ import { Form, LabeledInput } from 'Common/components';
 import { LABELS, MASKS } from './consts';
 import styles from './sign-up.module.scss';
 import { LabeledDropdown } from 'Common/components';
+import { useQueryClient } from '@tanstack/react-query';
+import { KEYS } from 'Common/types/api';
+import { IOffice } from 'Common/types/office';
 export const CreateUserForm = () => {
+    const queryClient = useQueryClient();
+
     const {
         register,
         formState: { errors },
@@ -17,7 +22,8 @@ export const CreateUserForm = () => {
         console.log(data);
     };
 
-    const mockOptions = ['one', 'two', 'three'];
+    const data = queryClient.getQueryData<IOffice[]>([KEYS.OFFICES]);
+    const officeOptions = data?.map(item => item.title);
 
     return (
         <Form
@@ -62,7 +68,7 @@ export const CreateUserForm = () => {
                         label={LABELS.OFFICE}
                         value={value}
                         onChange={onChange}
-                        options={mockOptions}
+                        options={officeOptions ?? []}
                     />
                 )}
             />

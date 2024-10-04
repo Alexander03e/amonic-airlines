@@ -1,7 +1,7 @@
 import { Button, Container } from 'Common/components';
 import styles from './main-page.module.scss';
 import { LABELS } from './consts';
-import { useModalStore } from 'Common/store/selectors';
+import { useModalStore } from 'Common/store/app/selectors';
 import { List } from 'Modules';
 import { mockList } from './mocks';
 

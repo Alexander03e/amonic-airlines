@@ -19,13 +19,16 @@
     .label {
         @include tga-regular-default;
 
+        font-weight: 700;
         color: var(--primary-base);
         transition: var(--transition);
     }
 
     & > input {
-        margin-block: 4px 2px;
-        padding: 6px 10px;
+        margin-block: 6px 2px;
+        padding: 10px 12px;
+
+        color: var(--primary-base);
 
         border: 1px solid var(--primary-base);
         border-radius: var(--gap-x1);

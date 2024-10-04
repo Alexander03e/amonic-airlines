@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { HttpInstanceFactory } from '../utils/HttpInstanceFactory';
+import { IUser, TUserRegPayload } from 'Common/types/user';
+import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class UserApi {
     private static _instance: UserApi | null = null;
@@ -16,7 +17,11 @@ export class UserApi {
         return this._instance;
     }
 
-    async addUser() {
-        console.log(this._httpInstance);
+    async addUser(data: TUserRegPayload): Promise<IUser> {
+        return (await this._httpInstance.post('/user', { ...data })).data;
+    }
+
+    async getUsers(): Promise<IUser[]> {
+        return (await this._httpInstance.get('/users')).data;
     }
 }

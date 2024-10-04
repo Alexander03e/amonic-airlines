@@ -1,8 +1,12 @@
 @use './src/assets/styles/fonts' as *;
 
 .wrapper {
-    overflow: hidden;
+    // overflow: hidden;
     display: grid;
+
+    min-width: 520px;
+
+    background-color: white;
     border: 1px solid var(--primary-base);
     border-radius: var(--gap-x2);
     .content {

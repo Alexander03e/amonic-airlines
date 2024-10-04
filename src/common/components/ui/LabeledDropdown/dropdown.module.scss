@@ -6,10 +6,10 @@
     .label {
         @include tga-regular-default;
 
+        font-weight: 700;
         color: var(--primary-base);   
         transition: var(--transition);
     }
-
 
     &.errorOut {
         .label {
@@ -49,9 +49,14 @@
 }
 
 .control {
-    padding-block: 10px!important;
+    cursor: pointer!important;
+
+    margin-block: 6px 2px;
+    padding: 14px 12px!important;
+
     border: 1px solid var(--primary-base)!important;
     border-radius: var(--gap-x1)!important;
+
     transition: var(--transition)!important;
 }
 
@@ -83,4 +88,9 @@
     background-color: transparent!important;
 
     @include tga-regular-default;
+}
+
+.arrow {
+    top: 50%!important;
+    transform: translateY(-50%);
 }

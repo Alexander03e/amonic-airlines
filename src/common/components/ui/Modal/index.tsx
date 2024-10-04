@@ -2,14 +2,14 @@ import { FC, ReactNode } from 'react';
 import styles from './modal.module.scss'; // Импортируем SCSS-модуль стилей
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOutsideClick, useScrollblock } from 'Common/hooks';
-import { useModalStore } from 'Common/store/selectors';
+import { useModalStore } from 'Common/store/app/selectors';
 import isNil from 'lodash/isNil';
 import { Icon } from '../Icon';
 import CloseIcon from 'Assets/icons/close.svg?react';
 
 interface ModalProps {
     withClose?: boolean;
-    children: ReactNode; // Содержимое модального окна
+    children: ReactNode;
 }
 
 export const Modal: FC<ModalProps> = ({ children, withClose = true }) => {

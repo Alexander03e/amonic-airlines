@@ -1,0 +1,97 @@
+@use './src/assets/styles/fonts' as *;
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+
+    & > span {
+        font-weight: 700!important;
+        color: var(--primary-base);        
+        transition: var(--transition);
+
+        @include tga-regular-default;
+    }
+    
+    .errorLabel {
+        color: var(--error-base);
+        transition: var(--transition);
+
+        @include tga-regular-small;
+    }
+
+    &.error {
+        & > span {
+            color: var(--error-base);
+        }
+        .itemWrapper {
+            & > span {
+                color: var(--error-base)!important;
+            }
+
+            & > div {
+                border-color: var(--error-base);
+            }
+        }
+
+        .list {
+            border-color: var(--error-base);
+        }
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        margin-block: 12px 4px;
+        padding-block: 12px 12px;
+        padding-inline: 12px;
+
+        border: 1px solid var(--primary-base);
+        border-radius: var(--gap-x1);
+
+        transition: var(--transition);
+    }
+
+    .itemWrapper {
+        cursor: pointer;
+
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+
+        border-radius: var(--gap-x1);
+
+        & > span {
+            color: var(--primary-base);
+            transition: var(--transition);
+        }
+
+        &:hover {
+            & > span {
+                text-decoration: underline;
+            }
+        }
+
+        & > div {
+            width: 12px;
+            height: 12px;
+
+            border: 2px solid var(--primary-base);
+            border-radius: 50%;
+
+            transition: var(--transition);
+        }
+
+        &.active {
+            & > div {
+                background-color: var(--primary-base);
+            }
+        }
+    }
+}
