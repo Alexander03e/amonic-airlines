@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { CommonQueryOptions } from './options';
+import { KEYS } from 'Common/types/api';
+import { CommonApi } from './api';
 
-const queryOptions = CommonQueryOptions.getInstance();
+const commonApi = CommonApi.getInstance();
 
+/** Хук для получения офисов */
 export const useOffices = () => {
-    return useQuery(queryOptions.getOffices());
+    return useQuery({ queryKey: [KEYS.OFFICES], queryFn: commonApi.getOffices });
 };

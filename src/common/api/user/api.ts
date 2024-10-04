@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { IUser, TUserRegPayload } from 'Common/types/user';
+import { IUser, TUserAuthPayload, TUserRegPayload } from 'Common/types/user';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class UserApi {
@@ -18,10 +18,22 @@ export class UserApi {
     }
 
     async addUser(data: TUserRegPayload): Promise<IUser> {
-        return (await this._httpInstance.post('/user', { ...data })).data;
+        return (await this._httpInstance.post('/users', { ...data })).data;
     }
 
     async getUsers(): Promise<IUser[]> {
         return (await this._httpInstance.get('/users')).data;
+    }
+
+    async authUser(data: TUserAuthPayload): Promise<unknown> {
+        return (await this._httpInstance.post('/users/verify', { ...data })).data;
+    }
+
+    async updateUser(data: Partial<IUser>): Promise<unknown> {
+        return (await this._httpInstance.put(`/users/${data.id}`, { ...data })).data;
+    }
+
+    async deleteUser(id: number): Promise<unknown> {
+        return (await this._httpInstance.delete(`/users/${id}`)).data
     }
 }
