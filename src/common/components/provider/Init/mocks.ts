@@ -7,10 +7,10 @@ export const mockOffices: IOffice[] = [
     },
     {
         id: 2,
-        title: 'Чебоксарский',
+        title: 'Политеховский',
     },
     {
         id: 3,
-        title: 'Северный',
+        title: 'Коптевский',
     },
 ];

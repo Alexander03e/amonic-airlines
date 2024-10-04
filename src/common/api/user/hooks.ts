@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IUser, TUserRegPayload } from 'Common/types/user';
+import { IUser, TUserAuthPayload, TUserRegPayload } from 'Common/types/user';
 import { KEYS } from 'Common/types/api';
 import { UserApi } from './api';
 
@@ -36,4 +36,9 @@ export const useUpdateUser = (data: Partial<IUser>) => {
             queryClient.invalidateQueries({ queryKey: [KEYS.USER, data.id] });
         },
     });
+};
+
+/** Хук для авторизации */
+export const useAuth = (data: TUserAuthPayload) => {
+    return useQuery({ queryKey: [KEYS.AUTH], queryFn: () => userApi.authUser(data) });
 };

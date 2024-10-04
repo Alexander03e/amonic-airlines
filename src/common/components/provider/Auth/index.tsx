@@ -1,5 +1,6 @@
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { AuthContext } from './context';
+import { TUserRole } from 'Common/types/role';
 
 interface IProps {
     children: ReactNode;
@@ -7,13 +8,19 @@ interface IProps {
 
 export const AuthProvider = ({ children }: IProps) => {
     const [isAuth, setIsAuth] = useState(false);
+    const [role, setRole] = useState<TUserRole | null>(null);
+    const [isLoading] = useState(false);
+    const [isError] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
         if (token) {
             setIsAuth(true);
-            console.log(token, isAuth);
+
+            const role = token.split('/')[0];
+
+            setRole(role as TUserRole);
         }
     }, []);
 
@@ -32,8 +39,11 @@ export const AuthProvider = ({ children }: IProps) => {
             isAuth,
             login,
             logout,
+            role,
+            isLoading,
+            isError,
         }),
-        [isAuth, login, logout],
+        [isAuth, login, logout, role, isError, isLoading],
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

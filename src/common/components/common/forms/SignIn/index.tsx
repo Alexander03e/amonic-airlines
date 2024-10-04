@@ -16,7 +16,7 @@ export const SignInForm = (): ReactElement => {
     const { login } = useAuthContext();
 
     const onSubmit = (data: TSignIn) => {
-        login('mock_token');
+        login('Administrator/mock_token');
         console.log(data);
     };
 
