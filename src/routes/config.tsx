@@ -1,7 +1,10 @@
-// import { TUserRole } from 'Common/types/role';
-// import { AuthPage } from 'Pages/Auth';
-// import { MainPage } from 'Pages/Main';
-// import { AdminPage, UserPage } from 'Pages/User';
+import { TUserRole } from 'Common/types/role';
+import { ReactNode } from 'react';
+
+export interface IRoute {
+    path: string;
+    element: ReactNode;
+}
 
 export const PATHS = {
     MAIN: '/',
@@ -13,24 +16,33 @@ export const PATHS = {
     USER: '/user',
 };
 
-// export const config = {
-//     auth: [
-//         {
-//             path: PATHS.AUTH,
-//             element: <AuthPage />,
-//         },
-//     ],
+export const ROUTE_PATHS = {
+    AUTH: {
+        INDEX: '/auth',
+    },
 
-//     private: [
-//         {
-//             path: PATHS.ADMIN,
-//             roles: ['Administrator'] as TUserRole[],
-//             element: <MainPage />,
-//         },
-//         {
-//             path: PATHS.USER,
-//             roles: ['User'] as TUserRole[],
-//             element: <UserPage />,
-//         },
-//     ],
-// };
+    USER: {
+        INDEX: '/user',
+
+        LOGS: {
+            INDEX: '/logs',
+        },
+    },
+
+    ADMIN: {
+        INDEX: '/admin',
+
+        USERS: {
+            INDEX: '/users',
+        },
+
+        FLIGHTS: {
+            INDEX: '/flights',
+        },
+    },
+};
+
+export const ROLES: Record<string, TUserRole> = {
+    ADMIN: 'Administrator',
+    USER: 'User',
+};

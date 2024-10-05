@@ -1,5 +1,11 @@
 import { AxiosInstance } from 'axios';
-import { IUser, TUserAuthPayload, TUserRegPayload, TUserUpdatePayload } from 'Common/types/user';
+import {
+    IUser,
+    TUserAuthPayload,
+    TUserAuthResponse,
+    TUserRegPayload,
+    TUserUpdatePayload,
+} from 'Common/types/user';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class UserApi {
@@ -25,7 +31,7 @@ export class UserApi {
         return (await this._httpInstance.get('/users')).data;
     }
 
-    async authUser(data: TUserAuthPayload): Promise<unknown> {
+    async authUser(data: TUserAuthPayload): Promise<TUserAuthResponse> {
         return (await this._httpInstance.post('/users/verify', { ...data })).data;
     }
 
@@ -33,7 +39,11 @@ export class UserApi {
         return (await this._httpInstance.put(`/users`, { ...data })).data;
     }
 
-    async deleteUser(id: number): Promise<unknown> {
+    async getUserById(id: number): Promise<IUser> {
+        return (await this._httpInstance.get(`/users/${id}`)).data;
+    }
+
+    async deleteUser(id: number): Promise<IUser> {
         return (await this._httpInstance.delete(`/users/${id}`)).data;
     }
 }

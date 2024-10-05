@@ -1,5 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IUser, TUserAuthPayload, TUserRegPayload, TUserUpdatePayload } from 'Common/types/user';
+import { useMutation, UseMutationResult, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+    IUser,
+    TUserAuthPayload,
+    TUserAuthResponse,
+    TUserRegPayload,
+    TUserUpdatePayload,
+} from 'Common/types/user';
 import { KEYS } from 'Common/types/api';
 import { UserApi } from './api';
 
@@ -27,7 +33,7 @@ export const useAddUser = () => {
 export const useUsers = () => {
     return useQuery({
         queryKey: [KEYS.USERS],
-        queryFn: async () => await userApi.getUsers(),
+        queryFn: async () => (await userApi.getUsers()).reverse(),
     });
 };
 
@@ -52,6 +58,23 @@ export const useUpdateUser = () => {
 };
 
 /** Хук для авторизации */
-export const useAuth = (data: TUserAuthPayload) => {
-    return useQuery({ queryKey: [KEYS.AUTH], queryFn: () => userApi.authUser(data) });
+export const useAuth = (): UseMutationResult<TUserAuthResponse, Error, TUserAuthPayload> => {
+    return useMutation<TUserAuthResponse, Error, TUserAuthPayload>({
+        mutationKey: [KEYS.AUTH],
+        mutationFn: async (data: TUserAuthPayload) => {
+            return await userApi.authUser(data);
+        },
+    });
+};
+
+/** Хук для получения юзера по id */
+export const useUserById = (id: number | null) => {
+    return useQuery({
+        queryKey: [KEYS.ME, id],
+        queryFn: async () => {
+            if (!id) return;
+            return await userApi.getUserById(id);
+        },
+        enabled: !!id,
+    });
 };

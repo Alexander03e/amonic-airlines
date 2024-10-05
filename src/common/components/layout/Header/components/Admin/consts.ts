@@ -1,7 +1,7 @@
 export const LINKS = [
     {
         label: 'Пользователи',
-        src: '/',
+        src: '/users',
     },
     {
         label: 'Рейсы',

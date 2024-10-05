@@ -12,6 +12,7 @@ export default defineConfig({
             Modules: path.resolve(__dirname, '/src/modules'),
             Pages: path.resolve(__dirname, '/src/pages'),
             Common: path.resolve(__dirname, '/src/common'),
+            Src: path.resolve(__dirname, '/src'),
         },
     },
 });

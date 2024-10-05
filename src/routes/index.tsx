@@ -1,24 +1,49 @@
 import { Page } from 'Common/components/layout/Page';
 import { Navigate, Route } from 'react-router-dom';
-import { PATHS } from './config';
-import { AuthPage } from 'Pages/Auth';
-import { MainPage } from 'Pages/Main';
+import { ROUTE_PATHS } from './config';
 import { Routes } from 'react-router-dom';
 import { useAuthContext } from 'Common/components/provider/Auth/context';
+import { AuthPage } from 'Pages/Auth';
+import { AdminRoutes } from 'Pages/Admin';
+import { UserRoutes } from 'Pages/User';
 
 export const AppRoutes = () => {
-    const { isAuth } = useAuthContext();
+    const { isAuth, role } = useAuthContext();
 
-    const home = isAuth ? <MainPage /> : <Navigate to={PATHS.AUTH} />;
+    const getElement = () => {
+        let route;
+        let auth;
 
-    const auth = isAuth ? <Navigate to={PATHS.MAIN} /> : <AuthPage />;
+        if (!isAuth) {
+            auth = <AuthPage />;
+            route = <Navigate to={ROUTE_PATHS.AUTH.INDEX} />;
+        } else if (role === 'Administrator') {
+            route = <AdminRoutes />;
+            auth = <Navigate to={ROUTE_PATHS.ADMIN.USERS.INDEX} />;
+        } else if (role === 'User') {
+            route = <UserRoutes />;
+            auth = <Navigate to={ROUTE_PATHS.USER.LOGS.INDEX} />;
+        } else {
+            route = <NotFound />;
+            auth = <Navigate to='/' />;
+        }
+
+        return { route, auth };
+    };
+
+    const { route, auth } = getElement();
 
     return (
         <Routes>
             <Route element={<Page />}>
-                <Route element={auth} path={PATHS.AUTH} />
-                <Route element={home} path={PATHS.MAIN} />
+                <Route element={auth} path={ROUTE_PATHS.AUTH.INDEX} />
+                <Route element={route} path='/*' />
+                <Route element={<NotFound />} path='*' />
             </Route>
         </Routes>
     );
+};
+
+const NotFound = () => {
+    return <div>not found</div>;
 };

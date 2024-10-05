@@ -2,6 +2,40 @@ import { IOffice } from './office';
 import { IRole } from './role';
 
 /**
+ * Интерфейс логов пользователя.
+ * @prop {IUser} user - объект пользователя.
+ * @prop {string} logInTime - время захода (ISO).
+ * @prop {string} [logOutTime] - время выхода (ISO).
+ * @prop {string | null} [crashReason] - причина сбоя.
+ * @prop {boolean | null} [softwareCrash] - сбой софта.
+ * @prop {boolean | null} [systemCrash] - системный сбой.
+ */
+interface IUserLogs {
+    user: IUser;
+    logInTime: string;
+    logOutTime?: string;
+    crashReason?: string | null;
+    softwareCrash?: boolean | null;
+    systemCrash?: boolean | null;
+}
+
+/**
+ * Интерфейс данных логов пользователя.
+ * @prop {number} user - Идентификатор пользователя.
+ */
+interface IUserLogPayload extends Omit<IUserLogs, 'user'> {
+    user: number;
+}
+
+/**
+ * Интерфейс ответа на добавление логов пользователя.
+ * @prop {number} id - Идентификатор логов.
+ */
+interface IUserLogAddResponse extends IUserLogs {
+    id: number;
+}
+
+/**
  * Интерфейс пользователя.
  * @prop {number} id - Идентификатор пользователя.
  * @prop {string} firstName - Имя пользователя.
@@ -44,4 +78,18 @@ type TUserUpdatePayload = Omit<IUser, 'role' | 'office'> & {
     role: number;
 };
 
-export type { IUser, TUserRegPayload, TUserAuthPayload, TUserUpdatePayload };
+type TUserAuthResponse = {
+    user: IUser;
+    status: 'INCORRECT PASSWORD' | 'ACCESS ACCEPT' | null | 400;
+};
+
+export type {
+    IUser,
+    TUserRegPayload,
+    TUserAuthPayload,
+    TUserUpdatePayload,
+    TUserAuthResponse,
+    IUserLogs,
+    IUserLogAddResponse,
+    IUserLogPayload,
+};

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { Form, LabeledInput } from 'Common/components';
 import { LABELS } from './consts';
 import { schema, TSignIn } from './schema';
@@ -6,8 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useAuthContext } from 'Common/components/provider/Auth/context';
 import styles from './sign-in.module.scss';
+import { useAuth } from 'Common/api/user/hooks';
+import { ERRORS } from 'Common/consts/errors';
 
 export const SignInForm = (): ReactElement => {
+    const [formError, setFormError] = useState('');
     const {
         register,
         formState: { errors },
@@ -16,13 +19,27 @@ export const SignInForm = (): ReactElement => {
 
     const { login } = useAuthContext();
 
-    const onSubmit = (data: TSignIn) => {
-        login('Administrator/mock_token');
-        console.log(data);
+    const { mutateAsync: authUser } = useAuth();
+
+    const onSubmit = async (data: TSignIn) => {
+        const response = await authUser(data);
+
+        const { status, user } = response;
+
+        if (status === 'ACCESS ACCEPT') {
+            const formattedLogin = `${user.role.title}/id_${user.id}`;
+
+            login(formattedLogin);
+        } else if (status === 'INCORRECT PASSWORD') {
+            setFormError(ERRORS.REQUEST_INVALID_PASSWORD);
+        } else if (!response) {
+            setFormError(ERRORS.REQUEST_ERROR);
+        }
     };
 
     return (
         <Form
+            error={formError}
             buttonLabel={LABELS.BUTTON}
             className={styles.form}
             onSubmit={handleSubmit(onSubmit)}

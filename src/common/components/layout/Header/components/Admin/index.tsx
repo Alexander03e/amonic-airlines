@@ -15,9 +15,10 @@ export const AdminButtons = (): ReactElement => {
 
     return (
         <>
-            {map(LINKS, item => {
+            {map(LINKS, (item, i) => {
                 return (
                     <Button
+                        key={i}
                         isActive={location === item.src}
                         variant='empty'
                         label={item.label}

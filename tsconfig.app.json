@@ -24,7 +24,8 @@
             "Assets/*": ["src/assets/*"],
             "Modules": ["src/modules"],
             "Common/*": ["src/common/*"],
-            "Pages/*": ["src/pages/*"]
+            "Pages/*": ["src/pages/*"],
+            "Src/*": ["src/*"]
         }
     },
     "include": ["src"]
