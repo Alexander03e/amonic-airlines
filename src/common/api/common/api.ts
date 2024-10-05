@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { IOffice } from 'Common/types/office';
+import { IRole } from 'Common/types/role';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class CommonApi {
@@ -18,6 +19,10 @@ export class CommonApi {
     }
 
     public async getOffices(): Promise<IOffice[]> {
-        return (await this._httpInstance.get('/office')).data;
+        return (await this._httpInstance.get('/offices')).data;
+    }
+
+    public async getRoles(): Promise<IRole[]> {
+        return (await this._httpInstance.get('/roles')).data;
     }
 }

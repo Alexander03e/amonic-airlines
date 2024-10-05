@@ -8,10 +8,17 @@ import isString from 'lodash/isString';
 interface IProps extends TUserRow {
     onSelect?: (id: number) => void;
     isSelected?: boolean;
+    className?: string;
     disabled?: boolean;
 }
 
-export const Row = ({ onSelect, isSelected, disabled, ...user }: IProps): ReactElement => {
+export const Row = ({
+    onSelect,
+    isSelected,
+    className,
+    disabled,
+    ...user
+}: IProps): ReactElement => {
     const { birthdate, email, firstName, lastName, office, role, active, id } = user;
 
     const age = !disabled ? getAgeByBirthday(birthdate) : birthdate;
@@ -24,8 +31,9 @@ export const Row = ({ onSelect, isSelected, disabled, ...user }: IProps): ReactE
 
     return (
         <div
+            tabIndex={0}
             onClick={handleSelect}
-            className={cn(styles.row, {
+            className={cn(styles.row, className, {
                 [styles.selected]: isSelected,
                 [styles.notActive]: !active,
                 [styles.disabled]: disabled,

@@ -6,5 +6,16 @@ const commonApi = CommonApi.getInstance();
 
 /** Хук для получения офисов */
 export const useOffices = () => {
-    return useQuery({ queryKey: [KEYS.OFFICES], queryFn: commonApi.getOffices });
+    return useQuery({
+        queryKey: [KEYS.OFFICES],
+        queryFn: async () => await commonApi.getOffices(),
+    });
+};
+
+/** Хук для получения ролей */
+export const useRoles = () => {
+    return useQuery({
+        queryKey: [KEYS.ROLES],
+        queryFn: async () => await commonApi.getRoles(),
+    });
 };

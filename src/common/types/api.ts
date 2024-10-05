@@ -3,4 +3,5 @@ export const KEYS = {
     USERS: 'users',
     AUTH: 'auth',
     OFFICES: 'offices',
+    ROLES: 'roles',
 };

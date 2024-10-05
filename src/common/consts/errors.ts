@@ -4,4 +4,6 @@ export const ERRORS = {
     INVALID_PASSWORD: 'Пароль должен содержать не менее 6 символов',
     INVALID_PHONE: 'Неверный формат телефона',
     INVALID_DATE: 'Неверная дата',
+
+    REQUEST_ERROR: 'Произошла ошибка',
 };

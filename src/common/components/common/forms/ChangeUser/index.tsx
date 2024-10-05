@@ -11,17 +11,9 @@ import styles from './change-user.module.scss';
 import { useQueryClient } from '@tanstack/react-query';
 import { KEYS } from 'Common/types/api';
 import { IOffice } from 'Common/types/office';
-
-const mockRadio = [
-    {
-        name: 'Administrator',
-        value: 'Administrator',
-    },
-    {
-        name: 'User',
-        value: 'User',
-    },
-];
+import { useUpdateUser } from 'Common/api/user/hooks';
+import { IRole } from 'Common/types/role';
+import { ERRORS } from 'Common/consts/errors';
 
 export const ChangeUser = () => {
     const queryClient = useQueryClient();
@@ -41,24 +33,43 @@ export const ChangeUser = () => {
             email: userData.email,
             firstName: userData.firstName,
             lastName: userData.lastName,
-            office: String(userData.office.title),
-            role: userData.role.title,
+            office: userData.office.id,
+            role: userData.role.id,
         },
     });
 
+    const { mutate: updateUser, isError, isSuccess } = useUpdateUser();
+
     const onSubmit = (data: TChangeUser) => {
-        console.log(data);
-        setCurrentModal(null);
+        const { office, role, ...rest } = data;
+
+        updateUser({
+            ...rest,
+            id: userData.id,
+            office: Number(office),
+            role: role,
+        });
+
+        if (isSuccess) {
+            setCurrentModal(null);
+        }
     };
 
     const handleClose = () => {
         setCurrentModal(null);
     };
 
-    const data = queryClient.getQueryData<IOffice[]>([KEYS.OFFICES]);
-    const officeOptions = data?.map(item => item.title);
+    const offices = queryClient.getQueryData<IOffice[]>([KEYS.OFFICES]);
+    const roles = queryClient.getQueryData<IRole[]>([KEYS.ROLES]);
+
+    const officeOptions = offices?.map(item => ({ value: String(item.id), label: item.title }));
+    const rolesOptions = roles?.map(item => ({ value: item.id, name: item.title }));
     return (
-        <Form label={TITLES.FORM} onSubmit={handleSubmit(onSubmit)}>
+        <Form
+            label={TITLES.FORM}
+            onSubmit={handleSubmit(onSubmit)}
+            error={isError ? ERRORS.REQUEST_ERROR : ''}
+        >
             <LabeledInput
                 error={errors.email?.message}
                 {...register('email')}
@@ -80,8 +91,8 @@ export const ChangeUser = () => {
                 render={({ field: { onChange, ref, value } }) => (
                     <LabeledDropdown
                         ref={ref}
-                        label={LABELS.OFFICE}
                         error={errors.office?.message}
+                        label={LABELS.OFFICE}
                         value={value}
                         onChange={onChange}
                         options={officeOptions ?? []}
@@ -95,7 +106,7 @@ export const ChangeUser = () => {
                     <RadioGroup
                         error={errors.role?.message}
                         label={LABELS.ROLE}
-                        items={mockRadio}
+                        items={rolesOptions}
                         value={value}
                         onChange={onChange}
                     />

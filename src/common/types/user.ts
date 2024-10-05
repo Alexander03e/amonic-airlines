@@ -39,4 +39,9 @@ type TUserAuthPayload = Pick<IUser, 'email'> & {
     password: string;
 };
 
-export type { IUser, TUserRegPayload, TUserAuthPayload };
+type TUserUpdatePayload = Omit<IUser, 'role' | 'office'> & {
+    office: number;
+    role: number;
+};
+
+export type { IUser, TUserRegPayload, TUserAuthPayload, TUserUpdatePayload };

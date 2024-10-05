@@ -8,8 +8,17 @@ import { LabeledDropdown } from 'Common/components';
 import { useQueryClient } from '@tanstack/react-query';
 import { KEYS } from 'Common/types/api';
 import { IOffice } from 'Common/types/office';
+import { useAddUser } from 'Common/api/user/hooks';
+import { IRole } from 'Common/types/role';
+import { RadioGroup } from 'Common/components/ui/RadioGroup';
+import { ERRORS } from 'Common/consts/errors';
+import { useAppStore } from 'Common/store/app';
+import { useEffect } from 'react';
+
 export const CreateUserForm = () => {
     const queryClient = useQueryClient();
+
+    const { setCurrentModal } = useAppStore();
 
     const {
         register,
@@ -18,12 +27,25 @@ export const CreateUserForm = () => {
         control,
     } = useForm<TSignUp>({ mode: 'onChange', resolver: zodResolver(schema) });
 
+    const { mutate: addUser, isError, isSuccess } = useAddUser();
+
     const onSubmit = (data: TSignUp) => {
-        console.log(data);
+        const { birthdate, ...rest } = data;
+        const formattedBirthdate = birthdate.split('.').reverse().join('-');
+        addUser({ birthdate: formattedBirthdate, ...rest });
     };
 
-    const data = queryClient.getQueryData<IOffice[]>([KEYS.OFFICES]);
-    const officeOptions = data?.map(item => item.title);
+    useEffect(() => {
+        if (isSuccess) {
+            setCurrentModal(null);
+        }
+    }, [isSuccess]);
+
+    const offices = queryClient.getQueryData<IOffice[]>([KEYS.OFFICES]);
+    const officeOptions = offices?.map(item => ({ value: String(item.id), label: item.title }));
+
+    const roles = queryClient.getQueryData<IRole[]>([KEYS.ROLES]);
+    const rolesOptions = roles?.map(item => ({ value: item.id, name: item.title }));
 
     return (
         <Form
@@ -31,6 +53,7 @@ export const CreateUserForm = () => {
             buttonLabel={LABELS.BUTTON}
             className={styles.wrapper}
             onSubmit={handleSubmit(onSubmit)}
+            error={isError ? ERRORS.REQUEST_ERROR : ''}
         >
             <div className={styles.row}>
                 <LabeledInput
@@ -73,18 +96,33 @@ export const CreateUserForm = () => {
                 )}
             />
 
-            <LabeledInput
-                {...register('birthdate')}
-                label={LABELS.BIRTHDATE}
-                mask={MASKS.BIRTHDATE}
-                error={errors.birthdate?.message}
+            <Controller
+                control={control}
+                name='role'
+                render={({ field: { onChange, value } }) => (
+                    <RadioGroup
+                        error={errors.role?.message}
+                        label={LABELS.ROLE}
+                        items={rolesOptions}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
             />
-            <LabeledInput
-                {...register('password')}
-                label={LABELS.PASSWORD}
-                type='password'
-                error={errors.password?.message}
-            />
+            <div className={styles.row}>
+                <LabeledInput
+                    {...register('birthdate')}
+                    label={LABELS.BIRTHDATE}
+                    mask={MASKS.BIRTHDATE}
+                    error={errors.birthdate?.message}
+                />
+                <LabeledInput
+                    {...register('password')}
+                    label={LABELS.PASSWORD}
+                    type='password'
+                    error={errors.password?.message}
+                />
+            </div>
         </Form>
     );
 };

@@ -5,6 +5,7 @@ import { schema, TSignIn } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useAuthContext } from 'Common/components/provider/Auth/context';
+import styles from './sign-in.module.scss';
 
 export const SignInForm = (): ReactElement => {
     const {
@@ -21,7 +22,12 @@ export const SignInForm = (): ReactElement => {
     };
 
     return (
-        <Form buttonLabel={LABELS.BUTTON} onSubmit={handleSubmit(onSubmit)} label={LABELS.FORM}>
+        <Form
+            buttonLabel={LABELS.BUTTON}
+            className={styles.form}
+            onSubmit={handleSubmit(onSubmit)}
+            label={LABELS.FORM}
+        >
             <LabeledInput
                 {...register('email')}
                 label={LABELS.EMAIL}

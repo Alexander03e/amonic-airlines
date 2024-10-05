@@ -5,5 +5,18 @@
 }
 
 .header {
+    position: sticky;
+    top: 0;
     padding-block: 16px;
+    transition: background-color var(--transition);
+
+    &.scrolled {
+        background-color: white;
+    }
+}
+
+.links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
 }

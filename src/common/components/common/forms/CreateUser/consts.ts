@@ -10,6 +10,8 @@ export const LABELS = {
     BUTTON: 'Зарегистрироваться',
 
     FORM: 'Создание пользователя',
+
+    ROLE: 'Роль',
 };
 
 export const MASKS = {

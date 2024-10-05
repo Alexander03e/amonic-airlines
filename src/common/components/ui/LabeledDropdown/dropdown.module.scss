@@ -70,7 +70,7 @@
     }
 }
 
-.error {
+.errorSpan {
     @include tga-regular-small;
     
     color: var(--error-base);

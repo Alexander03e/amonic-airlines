@@ -10,7 +10,9 @@
     color: var(--dark-text);
 
     background-color: white;
-    border: 1px solid transparent;
+    // border: 1px solid transparent;
+    border-left: 6px solid transparent;
+    outline: 1px solid var(--primary-base);
 
     transition: var(--transition);
 
@@ -26,16 +28,14 @@
     
             background-color: var(--success-color);
             border-radius: 50%;
-            outline: 2px solid white;
         }
     
         &:hover {
-            border-color: var(--primary-base);
+            border-left: 6px solid var(--primary-base-opacity);
         }
-    
+        
         &.selected {
-            color: white;
-            background-color: var(--primary-base);
+            border-left: 6px solid var(--primary-base);
         }
     
         &.notActive {

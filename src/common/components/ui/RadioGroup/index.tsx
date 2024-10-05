@@ -5,10 +5,12 @@ import cn from 'classnames';
 import { Height } from '../Animation';
 
 interface IProps {
-    items: {
-        name: string;
-        value: unknown;
-    }[];
+    items:
+        | {
+              name: string;
+              value: unknown;
+          }[]
+        | undefined;
     label?: string;
     onChange?: (value: unknown) => void;
     value: unknown;

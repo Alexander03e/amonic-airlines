@@ -7,18 +7,22 @@ import cn from 'classnames';
 import { PLACEHOLDER } from './consts';
 
 interface IProps {
-    options: string[];
+    options: {
+        value: string;
+        label: string;
+    }[];
     label?: string;
-    onChange?: (value: string) => void;
+    onChange?: (value: unknown) => void;
     placeholder?: string;
     error?: string;
-    value?: string;
+    value?: unknown;
 }
 
 export const LabeledDropdown = forwardRef<Dropdown, IProps>(
     ({ options, label, error, value, onChange, placeholder = PLACEHOLDER, ...props }, ref) => {
-        const handleChange = (value: string) => {
+        const handleChange = (value: number) => {
             if (!onChange) return;
+
             onChange(value);
         };
 
@@ -27,10 +31,10 @@ export const LabeledDropdown = forwardRef<Dropdown, IProps>(
                 {label && <span className={styles.label}>{label}</span>}
                 <Dropdown
                     ref={ref}
-                    value={value}
+                    value={value ? String(value) : undefined}
                     options={options}
                     placeholder={placeholder}
-                    onChange={({ value }) => handleChange(value)}
+                    onChange={({ value }) => handleChange(Number(value))}
                     placeholderClassName={styles.placeholder}
                     className={cn(styles.wrapper, { [styles.error]: error })}
                     controlClassName={styles.control}
@@ -39,7 +43,7 @@ export const LabeledDropdown = forwardRef<Dropdown, IProps>(
                     {...props}
                 />
                 <Height isOpen={Boolean(error)}>
-                    <span className={styles.error}>{error}</span>
+                    <span className={styles.errorSpan}>{error}</span>
                 </Height>
             </div>
         );

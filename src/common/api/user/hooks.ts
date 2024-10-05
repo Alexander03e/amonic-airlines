@@ -1,18 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IUser, TUserAuthPayload, TUserRegPayload } from 'Common/types/user';
+import { IUser, TUserAuthPayload, TUserRegPayload, TUserUpdatePayload } from 'Common/types/user';
 import { KEYS } from 'Common/types/api';
 import { UserApi } from './api';
 
 const userApi = UserApi.getInstance();
 
 /** Хук для добавления пользователя */
-export const useAddUser = (data: TUserRegPayload) => {
+export const useAddUser = () => {
     const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: () => userApi.addUser(data),
-        onSuccess: () => {
+    return useMutation<IUser, unknown, TUserRegPayload>({
+        mutationFn: (data: TUserRegPayload) => userApi.addUser(data),
+        onSuccess: (newUser: IUser) => {
             queryClient.invalidateQueries({ queryKey: [KEYS.USERS] });
+
+            queryClient.setQueryData<IUser[]>([KEYS.USERS], oldData => {
+                if (!oldData) return [newUser];
+
+                return [...oldData, newUser];
+            });
         },
     });
 };
@@ -21,19 +27,26 @@ export const useAddUser = (data: TUserRegPayload) => {
 export const useUsers = () => {
     return useQuery({
         queryKey: [KEYS.USERS],
-        queryFn: userApi.getUsers,
+        queryFn: async () => await userApi.getUsers(),
     });
 };
 
 /** Хук для изменения пользователя */
-export const useUpdateUser = (data: Partial<IUser>) => {
+export const useUpdateUser = () => {
     const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: () => userApi.updateUser(data),
-        onSuccess: () => {
-            console.log('re');
-            queryClient.invalidateQueries({ queryKey: [KEYS.USER, data.id] });
+    return useMutation<IUser, unknown, Partial<TUserUpdatePayload>>({
+        mutationFn: (data: Partial<TUserUpdatePayload>) => userApi.updateUser(data),
+        onSuccess: (data: IUser) => {
+            if (data && data.id) {
+                queryClient.invalidateQueries({ queryKey: [KEYS.USER, data.id] });
+
+                queryClient.setQueryData<IUser[]>([KEYS.USERS], oldData => {
+                    if (!oldData) return [];
+
+                    return oldData.map(user => (user.id === data.id ? { ...user, ...data } : user));
+                });
+            }
         },
     });
 };

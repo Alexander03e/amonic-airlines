@@ -1,19 +1,17 @@
 import { ReactElement, useState } from 'react';
 import styles from './list.module.scss';
-import { IUser } from 'Common/types/user';
 import map from 'lodash/map';
 import { Row } from './components/Row';
-import { Button } from 'Common/components';
+import { Button, Error, Loader } from 'Common/components';
 import { TABLE_ROW, TITLE } from './consts';
 import { useAppStore } from 'Common/store/app';
 import { Slide } from 'Common/components/ui/Animation';
+import { useUsers } from 'Common/api/user/hooks';
 
-interface IProps {
-    users: IUser[];
-}
-
-export const List = ({ users }: IProps): ReactElement => {
+export const List = (): ReactElement => {
     const { setCurrentModal, setModalData } = useAppStore();
+
+    const { data, isError, isLoading } = useUsers();
 
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
@@ -25,7 +23,11 @@ export const List = ({ users }: IProps): ReactElement => {
         setSelectedUserId(id);
     };
 
-    const selectedUser = users?.find(item => item.id === selectedUserId);
+    const handleCreateUser = () => {
+        setCurrentModal('#createUser');
+    };
+
+    const selectedUser = data?.find(item => item.id === selectedUserId);
 
     const getToggleTitle = () => {
         if (!selectedUser?.active) return TITLE.ENABLE;
@@ -42,11 +44,22 @@ export const List = ({ users }: IProps): ReactElement => {
         setCurrentModal('#changeUser');
     };
 
+    if (isError) return <Error />;
+
+    if (isLoading) return <Loader />;
+
     return (
         <div className={styles.wrapper}>
-            <Row {...TABLE_ROW} disabled />
+            <div className={styles.top}>
+                <Button onClick={handleCreateUser} label={TITLE.CREATE} />
+                <Slide className={styles.buttons} isOpen={Boolean(selectedUser)}>
+                    <Button label={toggleTitle} />
+                    <Button onClick={handleChange} label={TITLE.CHANGE} />
+                </Slide>
+            </div>
+            <Row className={styles.firstRow} {...TABLE_ROW} disabled />
             <div className={styles.list}>
-                {map(users, user => {
+                {map(data, user => {
                     return (
                         <Row
                             onSelect={handleSelect}
@@ -64,11 +77,6 @@ export const List = ({ users }: IProps): ReactElement => {
                     );
                 })}
             </div>
-
-            <Slide className={styles.buttons} isOpen={Boolean(selectedUser)}>
-                <Button label={toggleTitle} />
-                <Button onClick={handleChange} label={TITLE.CHANGE} />
-            </Slide>
         </div>
     );
 };

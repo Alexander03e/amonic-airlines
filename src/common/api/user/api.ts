@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { IUser, TUserAuthPayload, TUserRegPayload } from 'Common/types/user';
+import { IUser, TUserAuthPayload, TUserRegPayload, TUserUpdatePayload } from 'Common/types/user';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class UserApi {
@@ -29,11 +29,11 @@ export class UserApi {
         return (await this._httpInstance.post('/users/verify', { ...data })).data;
     }
 
-    async updateUser(data: Partial<IUser>): Promise<unknown> {
-        return (await this._httpInstance.put(`/users/${data.id}`, { ...data })).data;
+    async updateUser(data: Partial<TUserUpdatePayload>): Promise<IUser> {
+        return (await this._httpInstance.put(`/users`, { ...data })).data;
     }
 
     async deleteUser(id: number): Promise<unknown> {
-        return (await this._httpInstance.delete(`/users/${id}`)).data
+        return (await this._httpInstance.delete(`/users/${id}`)).data;
     }
 }

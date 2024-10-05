@@ -4,6 +4,7 @@ export const TITLE = {
     CHANGE: 'Изменить роль',
     DISABLE: 'Заблокировать',
     ENABLE: 'Разблокировать',
+    CREATE: 'Добавить пользователя',
 };
 
 export const TABLE_ROW: TUserRow = {

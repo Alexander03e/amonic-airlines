@@ -1,12 +1,14 @@
 import { FormHTMLAttributes, ReactElement } from 'react';
 import styles from './form.module.scss';
 import cn from 'classnames';
-import { Button } from 'Common/components';
+import { Button, Height, Loader } from 'Common/components';
 
 type IProps = FormHTMLAttributes<HTMLFormElement> & {
     buttonLabel?: string;
     label?: string;
     withoutButton?: boolean;
+    loading?: boolean;
+    error?: string;
 };
 
 export const Form = ({
@@ -15,6 +17,8 @@ export const Form = ({
     label,
     buttonLabel,
     withoutButton = false,
+    loading = false,
+    error,
     ...props
 }: IProps): ReactElement => {
     return (
@@ -26,7 +30,9 @@ export const Form = ({
             )}
             <div className={styles.content}>
                 {children}
-
+                <Height isOpen={Boolean(error) || Boolean(loading)}>
+                    <div className={styles.error}>{error || <Loader />}</div>
+                </Height>
                 {!withoutButton && buttonLabel && (
                     <Button fullWidth label={buttonLabel} variant='secondary' type='submit' />
                 )}

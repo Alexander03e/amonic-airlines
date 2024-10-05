@@ -6,12 +6,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label?: string;
     variant?: 'primary' | 'secondary' | 'danger' | 'empty';
     fullWidth?: boolean;
+    isActive?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
     label,
     variant = 'primary',
     className,
+    isActive,
     fullWidth,
     ...props
 }) => {
@@ -19,6 +21,7 @@ export const Button: FC<ButtonProps> = ({
         <button
             className={cn(styles.button, styles[variant], className, {
                 [styles.fullWidth]: fullWidth,
+                [styles.active]: isActive,
             })}
             {...props}
         >

@@ -7,3 +7,5 @@ export { Height } from './Animation';
 export { Container } from './Container';
 export { Icon } from './Icon';
 export { LabeledDropdown } from './LabeledDropdown';
+export { Loader } from './Loader';
+export { Error } from './Error';

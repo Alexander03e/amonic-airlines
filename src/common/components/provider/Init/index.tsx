@@ -1,17 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
-// import { useOffices } from 'Common/api/common/hooks';
-import { KEYS } from 'Common/types/api';
-import { IOffice } from 'Common/types/office';
 import { PropsWithChildren } from 'react';
-import { mockOffices } from './mocks';
+import { useOffices, useRoles } from 'Common/api/common/hooks';
 
 export const InitProvider = ({ children }: PropsWithChildren) => {
-    const queryClient = useQueryClient();
-
-    /** TODO: Замоканные данные, убрать позже */
-    queryClient.setQueryData<IOffice[]>([KEYS.OFFICES], mockOffices);
-
-    // useOffices();
+    useOffices();
+    useRoles();
 
     return children;
 };

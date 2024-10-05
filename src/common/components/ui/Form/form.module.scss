@@ -4,6 +4,7 @@
     // overflow: hidden;
     display: grid;
 
+    width: 600px!important;
     min-width: 520px;
 
     background-color: white;
@@ -43,4 +44,9 @@
     label {
         width: 100%;
     }
+}
+
+.error {
+    display: block;
+    color: var(--error-base);
 }

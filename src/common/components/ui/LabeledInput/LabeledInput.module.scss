@@ -10,9 +10,10 @@
     .error {
         @include tga-regular-small;
 
-        
+        display: block;
+        // line-height: 2px!important;
         color: var(--error-base);
-        white-space: nowrap;
+        // white-space: nowrap;
         transition: var(--transition);
     }
     

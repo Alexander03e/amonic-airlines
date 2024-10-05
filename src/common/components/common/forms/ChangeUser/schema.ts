@@ -1,12 +1,13 @@
-import { object, infer as zInfer } from 'zod';
+import { number, object, infer as zInfer } from 'zod';
 import { emailSchema, stringSchema } from 'Common/schema';
+import { ERRORS } from 'Common/consts/errors';
 
 export const schema = object({
     firstName: stringSchema,
     lastName: stringSchema,
     email: emailSchema,
-    office: stringSchema,
-    role: stringSchema,
+    office: number({ message: ERRORS.REQUIRED }),
+    role: number({ message: ERRORS.REQUIRED }),
 });
 
 export type TChangeUser = zInfer<typeof schema>;
