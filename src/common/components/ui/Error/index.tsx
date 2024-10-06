@@ -1,4 +1,3 @@
 export const Error = () => {
-
-    return <p>Ошибка</p>
-}
+    return <p>Не удалось загрузить данные</p>;
+};

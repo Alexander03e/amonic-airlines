@@ -9,6 +9,7 @@ type IProps = FormHTMLAttributes<HTMLFormElement> & {
     withoutButton?: boolean;
     loading?: boolean;
     error?: string;
+    info?: string;
 };
 
 export const Form = ({
@@ -19,6 +20,7 @@ export const Form = ({
     withoutButton = false,
     loading = false,
     error,
+    info,
     ...props
 }: IProps): ReactElement => {
     return (
@@ -30,6 +32,9 @@ export const Form = ({
             )}
             <div className={styles.content}>
                 {children}
+                <Height isOpen={Boolean(info)}>
+                    <div className={styles.info}>{info}</div>
+                </Height>
                 <Height isOpen={Boolean(error) || Boolean(loading)}>
                     <div className={styles.error}>{error || <Loader />}</div>
                 </Height>

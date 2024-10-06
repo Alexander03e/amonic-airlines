@@ -10,6 +10,10 @@
     background-color: white;
     border: 1px solid var(--primary-base);
     border-radius: var(--gap-x2);
+
+    .info {
+        color: var(--primary-base)
+    }
     .content {
         display: flex;
         flex-direction: column;

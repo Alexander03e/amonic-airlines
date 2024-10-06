@@ -18,7 +18,6 @@ import { ERRORS } from 'Common/consts/errors';
 export const ChangeUser = () => {
     const queryClient = useQueryClient();
     const { modalData, setCurrentModal } = useAppStore();
-
     const userData = modalData as IUser;
 
     const {
@@ -38,21 +37,16 @@ export const ChangeUser = () => {
         },
     });
 
-    const { mutate: updateUser, isError, isSuccess } = useUpdateUser();
+    const { mutateAsync: updateUser, isError, isPending, isSuccess } = useUpdateUser();
 
-    const onSubmit = (data: TChangeUser) => {
+    const onSubmit = async (data: TChangeUser) => {
         const { office, role, ...rest } = data;
-
-        updateUser({
+        await updateUser({
             ...rest,
             id: userData.id,
             office: Number(office),
             role: role,
         });
-
-        if (isSuccess) {
-            setCurrentModal(null);
-        }
     };
 
     const handleClose = () => {
@@ -66,6 +60,7 @@ export const ChangeUser = () => {
     const rolesOptions = roles?.map(item => ({ value: item.id, name: item.title }));
     return (
         <Form
+            info={isSuccess ? 'Данные изменены' : ''}
             label={TITLES.FORM}
             onSubmit={handleSubmit(onSubmit)}
             error={isError ? ERRORS.REQUEST_ERROR : ''}
@@ -113,8 +108,20 @@ export const ChangeUser = () => {
                 )}
             />
             <div className={styles.buttons}>
-                <Button type='button' onClick={handleClose} label={LABELS.CANCEL} fullWidth />
-                <Button type='submit' label={LABELS.SAVE} fullWidth variant='secondary' />
+                <Button
+                    disabled={isPending}
+                    type='button'
+                    onClick={handleClose}
+                    label={LABELS.CANCEL}
+                    fullWidth
+                />
+                <Button
+                    disabled={isPending}
+                    type='submit'
+                    label={LABELS.SAVE}
+                    fullWidth
+                    variant='secondary'
+                />
             </div>
         </Form>
     );

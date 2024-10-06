@@ -14,7 +14,7 @@ interface IUserLogs {
     id?: number;
     user: IUser;
     logInTime: string;
-    logOutTime?: string;
+    logOutTime: string;
     crashReason?: string | null;
     softwareCrash?: boolean | null;
     systemCrash?: boolean | null;
@@ -30,10 +30,12 @@ interface IUserLogPayload extends Omit<IUserLogs, 'user'> {
 
 /**
  * Интерфейс ответа на добавление логов пользователя.
- * @prop {number} id - Идентификатор логов.
+ * @prop {IUserLogs[]} usersLogs - Логи юзера.
+ * @prop {string} timeSpend - Проведенное время юзера.
  */
-interface IUserLogAddResponse extends IUserLogs {
-    id: number;
+interface IUserLogsDataResponse {
+    usersLogs: IUserLogs[];
+    timeSpend: string;
 }
 
 /**
@@ -91,6 +93,6 @@ export type {
     TUserUpdatePayload,
     TUserAuthResponse,
     IUserLogs,
-    IUserLogAddResponse,
+    IUserLogsDataResponse,
     IUserLogPayload,
 };

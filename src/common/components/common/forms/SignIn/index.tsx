@@ -19,7 +19,7 @@ export const SignInForm = (): ReactElement => {
 
     const { login } = useAuthContext();
 
-    const { mutateAsync: authUser } = useAuth();
+    const { mutateAsync: authUser, isError } = useAuth();
 
     const onSubmit = async (data: TSignIn) => {
         const response = await authUser(data);
@@ -32,8 +32,10 @@ export const SignInForm = (): ReactElement => {
             login(formattedLogin);
         } else if (status === 'INCORRECT PASSWORD') {
             setFormError(ERRORS.REQUEST_INVALID_PASSWORD);
+        } else if (isError) {
+            setFormError(ERRORS.REQUEST_INVALID_PASSWORD);
         } else if (!response) {
-            setFormError(ERRORS.REQUEST_ERROR);
+            setFormError(ERRORS.CHECK_DATA);
         }
     };
 

@@ -6,5 +6,6 @@ export const ERRORS = {
     INVALID_DATE: 'Неверная дата',
 
     REQUEST_ERROR: 'Произошла ошибка',
+    CHECK_DATA: 'Проверьте введенные данные',
     REQUEST_INVALID_PASSWORD: 'Неверный пароль',
 };
