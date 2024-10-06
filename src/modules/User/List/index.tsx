@@ -6,7 +6,7 @@ import { Button, Error, Loader } from 'Common/components';
 import { TABLE_ROW, TITLE } from './consts';
 import { useAppStore } from 'Common/store/app';
 import { Slide } from 'Common/components/ui/Animation';
-import { useUsers } from 'Common/api/user/hooks';
+import { useUpdateUser, useUsers } from 'Common/api/user/hooks';
 
 export const List = (): ReactElement => {
     const { setCurrentModal, setModalData } = useAppStore();
@@ -14,6 +14,7 @@ export const List = (): ReactElement => {
     const { data, isError, isLoading } = useUsers();
 
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+    const { mutate: updateUser } = useUpdateUser();
 
     const handleSelect = (id: number) => {
         if (id === selectedUserId) {
@@ -44,6 +45,14 @@ export const List = (): ReactElement => {
         setCurrentModal('#changeUser');
     };
 
+    const handleToggleUnlock = () => {
+        if (!selectedUser?.active) {
+            updateUser({ active: true, id: selectedUser?.id });
+            return;
+        }
+        updateUser({ active: false, id: selectedUser.id });
+    };
+
     if (isError) return <Error />;
 
     if (isLoading) return <Loader />;
@@ -53,7 +62,7 @@ export const List = (): ReactElement => {
             <div className={styles.top}>
                 <Button onClick={handleCreateUser} label={TITLE.CREATE} />
                 <Slide className={styles.buttons} isOpen={Boolean(selectedUser)}>
-                    <Button label={toggleTitle} />
+                    <Button onClick={handleToggleUnlock} label={toggleTitle} />
                     <Button onClick={handleChange} label={TITLE.CHANGE} />
                 </Slide>
             </div>

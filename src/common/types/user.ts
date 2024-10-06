@@ -11,6 +11,7 @@ import { IRole } from './role';
  * @prop {boolean | null} [systemCrash] - системный сбой.
  */
 interface IUserLogs {
+    id?: number;
     user: IUser;
     logInTime: string;
     logOutTime?: string;

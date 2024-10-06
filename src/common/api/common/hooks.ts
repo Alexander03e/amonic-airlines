@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { KEYS } from 'Common/types/api';
 import { CommonApi } from './api';
 
@@ -18,4 +18,10 @@ export const useRoles = () => {
         queryKey: [KEYS.ROLES],
         queryFn: async () => await commonApi.getRoles(),
     });
+};
+
+export const useQueryCache = <T>(key: string[]): T | undefined => {
+    const queryClient = useQueryClient();
+
+    return queryClient.getQueryData<T>(key);
 };

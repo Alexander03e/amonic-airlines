@@ -6,4 +6,5 @@ export const KEYS = {
     ROLES: 'roles',
     ME: 'me',
     LOGS: 'logs',
+    ALL_LOGS: 'all_logs',
 };

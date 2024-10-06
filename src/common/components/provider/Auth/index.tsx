@@ -4,6 +4,7 @@ import { TUserRole } from 'Common/types/role';
 import { useUserById } from 'Common/api/user/hooks';
 import { Storage } from 'Common/utils/storage';
 import { useUserLogsUpdate } from 'Common/api/logs/hooks';
+import { useUserStore } from 'Common/store/user';
 
 interface IProps {
     children: ReactNode;
@@ -18,16 +19,24 @@ export const AuthProvider = ({ children }: IProps) => {
     const [isError] = useState(false);
     const [id, setId] = useState<number | null>(null);
 
+    const { setUser } = useUserStore();
+
     const { mutate: updateUserLogs } = useUserLogsUpdate();
 
-    useUserById(id);
+    const { data } = useUserById(id);
+
+    useEffect(() => {
+        if (data) {
+            setUser(data);
+        }
+    }, [data, setUser]);
 
     useLayoutEffect(() => {
         const token = localStorage.getItem('token');
 
         if (token) {
             /** Установка времени сессии */
-            /** TODO: зарефакторить если будет время */
+            /** TODO: зарефакторить + перенесли в отдельный сервис если будет время */
             const userId = token?.split('/')[1].split('_')[1];
 
             const currentSessionLogin = storage.get('loginTime');

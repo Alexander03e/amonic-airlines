@@ -1,0 +1,11 @@
+.wrapper {
+    position: relative;
+
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+
+    height: 600px;
+
+    border: 1px solid var(--primary-base);
+}

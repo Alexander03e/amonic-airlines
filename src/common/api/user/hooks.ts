@@ -70,9 +70,9 @@ export const useAuth = (): UseMutationResult<TUserAuthResponse, Error, TUserAuth
 /** Хук для получения юзера по id */
 export const useUserById = (id: number | null) => {
     return useQuery({
-        queryKey: [KEYS.ME, id],
+        queryKey: [KEYS.ME],
         queryFn: async () => {
-            if (!id) return;
+            if (!id) return 
             return await userApi.getUserById(id);
         },
         enabled: !!id,
