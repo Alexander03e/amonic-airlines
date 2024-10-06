@@ -8,6 +8,7 @@ import { useAuthContext } from 'Common/components/provider/Auth/context';
 import styles from './sign-in.module.scss';
 import { useAuth } from 'Common/api/user/hooks';
 import { ERRORS } from 'Common/consts/errors';
+import { useUserLogsUpdate } from 'Common/api/logs/hooks';
 
 export const SignInForm = (): ReactElement => {
     const [formError, setFormError] = useState('');
@@ -18,6 +19,7 @@ export const SignInForm = (): ReactElement => {
     } = useForm<TSignIn>({ mode: 'onChange', resolver: zodResolver(schema) });
 
     const { login } = useAuthContext();
+    const { mutate: updateUserLogs } = useUserLogsUpdate();
 
     const { mutateAsync: authUser, isError } = useAuth();
 
@@ -28,7 +30,7 @@ export const SignInForm = (): ReactElement => {
 
         if (status === 'ACCESS ACCEPT') {
             const formattedLogin = `${user.role.title}/id_${user.id}`;
-
+            updateUserLogs({ logInTime: new Date().toISOString(), user: user.id });
             login(formattedLogin);
         } else if (status === 'INCORRECT PASSWORD') {
             setFormError(ERRORS.REQUEST_INVALID_PASSWORD);
@@ -36,6 +38,8 @@ export const SignInForm = (): ReactElement => {
             setFormError(ERRORS.REQUEST_INVALID_PASSWORD);
         } else if (!response) {
             setFormError(ERRORS.CHECK_DATA);
+        } else {
+            setFormError(String(status));
         }
     };
 

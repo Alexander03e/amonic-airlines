@@ -14,7 +14,7 @@ interface IUserLogs {
     id?: number;
     user: IUser;
     logInTime: string;
-    logOutTime: string;
+    logOutTime?: string;
     crashReason?: string | null;
     softwareCrash?: boolean | null;
     systemCrash?: boolean | null;

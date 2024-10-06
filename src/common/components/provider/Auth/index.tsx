@@ -37,31 +37,31 @@ export const AuthProvider = ({ children }: IProps) => {
         if (token) {
             /** Установка времени сессии */
             /** TODO: зарефакторить + перенесли в отдельный сервис если будет время */
-            const userId = token?.split('/')[1].split('_')[1];
+            // const userId = token?.split('/')[1].split('_')[1];
 
-            const currentSessionLogin = storage.get('loginTime');
-            const currentSessionTime = storage.get('sessionTime');
+            // const currentSessionLogin = storage.get('loginTime');
+            // const currentSessionTime = storage.get('sessionTime');
 
-            const prevSessionLogin = localStorage.getItem('loginTime');
-            const prevSessionTime = localStorage.getItem('sessionTime');
-            const now = new Date().toISOString();
+            // const prevSessionLogin = localStorage.getItem('loginTime');
+            // const prevSessionTime = localStorage.getItem('sessionTime');
+            // const now = new Date().toISOString();
 
-            if ((!currentSessionLogin && !currentSessionTime) || currentSessionTime == '0') {
-                const prevLoginTime = new Date(prevSessionLogin || '').getTime();
-                const prevSessionDuration = new Date(prevSessionTime || '').getTime();
-                const timeDifference = Math.abs(prevSessionDuration - prevLoginTime) / 1000;
-                if (timeDifference > 2) {
-                    updateUserLogs({
-                        user: Number(userId),
-                        logInTime: String(prevSessionLogin),
-                        logOutTime: String(prevSessionTime),
-                    });
-                }
+            // if ((!currentSessionLogin && !currentSessionTime) || currentSessionTime == '0') {
+            //     const prevLoginTime = new Date(prevSessionLogin || '').getTime();
+            //     const prevSessionDuration = new Date(prevSessionTime || '').getTime();
+            //     const timeDifference = Math.abs(prevSessionDuration - prevLoginTime) / 1000;
+            //     if (timeDifference > 2) {
+            //         updateUserLogs({
+            //             user: Number(userId),
+            //             logInTime: String(prevSessionLogin),
+            //             logOutTime: String(prevSessionTime),
+            //         });
+            //     }
 
-                localStorage.setItem('loginTime', now);
-                localStorage.setItem('sessionTime', now);
-                /** --------------------- */
-            }
+            //     localStorage.setItem('loginTime', now);
+            //     localStorage.setItem('sessionTime', now);
+            // }
+            /** --------------------- */
 
             setIsAuth(true);
         }
