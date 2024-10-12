@@ -10,4 +10,5 @@ Amonic Airlines - CRM система для персонала и клиенто
 - zustand
 - react-router v6
 - react-hook-form
+- scss modules
 - vite
