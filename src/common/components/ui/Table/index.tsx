@@ -20,6 +20,8 @@ const Table = ({ rows, rowOnClick, activeRowId, header }: IProps) => {
         rowOnClick(id);
     };
 
+    console.log(rows);
+
     return (
         <div className={styles.out}>
             <ResponsiveTable className={styles.wrapper}>
@@ -31,6 +33,7 @@ const Table = ({ rows, rowOnClick, activeRowId, header }: IProps) => {
                                 onClick={handleRowClick.bind(this, row.id)}
                                 isActive={activeRowId === row.id}
                                 key={row.id as string}
+                                isEdited={row.isEdited}
                                 {...row}
                             />
                         );

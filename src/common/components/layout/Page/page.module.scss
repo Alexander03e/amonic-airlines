@@ -3,3 +3,13 @@
     width: 100%;
     // height: 100%;
 }
+.toast {
+    & > div {
+        color: white;
+        background-color: var(--primary-base);
+
+        svg {
+            fill: white;
+        }
+    }
+}

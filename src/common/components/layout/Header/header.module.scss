@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -19,7 +20,17 @@
 }
 
 .links {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
     display: flex;
     gap: 32px;
     align-items: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
 }

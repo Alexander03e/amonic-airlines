@@ -4,7 +4,7 @@ import styles from './button.module.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label?: string;
-    variant?: 'primary' | 'secondary' | 'danger' | 'empty';
+    variant?: 'primary' | 'secondary' | 'danger' | 'empty' | 'success';
     fullWidth?: boolean;
     isActive?: boolean;
 }

@@ -33,6 +33,12 @@
         background-color: var(--primary-base);
     }
 
+    &.success {
+        color: white;
+        background-color: var(--success-color);
+    
+    }
+
     &.secondary {
         color: white;
         background-color: var(--secondary-base);
@@ -40,7 +46,7 @@
 
     &.danger {
         color: white;
-        background-color: var(-error-base);
+        background-color: var(--error-base);
     }
 
     &:hover {

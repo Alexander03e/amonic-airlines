@@ -3,10 +3,11 @@ import { useAppStore } from '.';
 
 export const useModalStore = () => {
     return useAppStore(
-        useShallow(({ currentModal, modalData, setCurrentModal }) => ({
+        useShallow(({ currentModal, modalData, setCurrentModal, setModalData }) => ({
             currentModal,
             modalData,
             setCurrentModal,
+            setModalData,
         })),
     );
 };

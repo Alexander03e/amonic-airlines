@@ -33,14 +33,14 @@ export const Airports = () => {
             <LabeledDropdown
                 onChange={handleSetFrom}
                 label='Аэропорт отправления'
-                options={options}
+                options={options.filter(option => option.value !== to)}
                 value={from}
             />
             <LabeledDropdown
                 value={to}
                 onChange={handleSetTo}
                 label='Аэропорт прибытия'
-                options={options}
+                options={options.filter(option => option.value !== from)}
             />
         </>
     );

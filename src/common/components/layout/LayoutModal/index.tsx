@@ -1,4 +1,4 @@
-import { CreateUserForm, ChangeUser } from 'Common/components/common';
+import { CreateUserForm, ChangeUser, ChangeSchedule } from 'Common/components/common';
 import { Modal } from 'Common/components/ui';
 import { useModalStore } from 'Common/store/app/selectors';
 import { ReactElement } from 'react';
@@ -9,6 +9,7 @@ export const LayoutModal = (): ReactElement => {
         <Modal>
             {currentModal === '#createUser' && <CreateUserForm />}
             {currentModal === '#changeUser' && <ChangeUser />}
+            {currentModal === '#changeschedule' && <ChangeSchedule />}
         </Modal>
     );
 };

@@ -10,12 +10,18 @@ import throttle from 'lodash/throttle';
 import cn from 'classnames';
 import { AdminButtons } from './components/Admin';
 import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATHS } from 'Src/routes/config';
+import { Slide } from 'Common/components/ui/Animation';
+import { useUpdatedScheduleStore } from 'Common/store/schedule';
+import { handleToastWithPromise } from 'Common/components/ui/Toast';
 
 export const Header = () => {
     const { isAuth, logout, role } = useAuthContext();
     const scrollPrev = useRef<number>(0);
     const controls = useAnimation();
     const [headerOpened, setHeaderOpened] = useState(true);
+    const { schedules, setSchedule } = useUpdatedScheduleStore();
+    const location = window.location.pathname;
 
     const navigate = useNavigate();
 
@@ -56,6 +62,18 @@ export const Header = () => {
         };
     }, [controls]);
 
+    const saveAll = () => {
+        const promise = new Promise(resolve => {
+            setTimeout(() => {
+                resolve('done');
+            }, 1000);
+        });
+
+        handleToastWithPromise(() => promise, 'Изменения сохранены', 'Сохранение изменений');
+
+        setSchedule(null);
+    };
+
     return (
         <motion.header
             initial={{ y: 0 }}
@@ -76,7 +94,21 @@ export const Header = () => {
                             {role === 'Administrator' && <AdminButtons />}
                         </div>
 
-                        <Button onClick={handleLogout} label={LABELS.SIGN_OUT} />
+                        <div className={styles.buttons}>
+                            <Slide
+                                isOpen={
+                                    location === ROUTE_PATHS.ADMIN.FLIGHTS.INDEX &&
+                                    Boolean(schedules.length)
+                                }
+                            >
+                                <Button
+                                    onClick={saveAll}
+                                    label='Сохранить все изменения'
+                                    variant='success'
+                                />
+                            </Slide>
+                            <Button onClick={handleLogout} label={LABELS.SIGN_OUT} />
+                        </div>
                     </>
                 )}
             </Container>

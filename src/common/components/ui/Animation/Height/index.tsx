@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 interface IProps {
-    children: ReactElement;
+    children: ReactNode;
     isOpen: boolean;
     className?: string;
 }

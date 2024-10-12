@@ -69,4 +69,20 @@ export interface IFlightSchedule {
     confirmed: boolean;
 }
 
+export type TUpdateAction = 'ADD' | 'EDIT';
+
+/**
+ * Интерфейс для обновления расписания рейса.
+ * @prop {TUpdateAction} action - действие.
+ * @prop {number} aircraft - идентификатор самолета.
+ * @prop {string} departureAirport - IATA-код аэропорта отправления.
+ * @prop {string} arrivalAirport - IATA-код аэропорта прибытия.
+ */
+export interface IUpdateSchedule extends Omit<IFlightSchedule, 'aircraft' | 'route' | 'id'> {
+    action: TUpdateAction;
+    aircraft: number;
+    departureAirport: string;
+    arrivalAirport: string;
+}
+
 export type TFlightShedulePayload = Omit<IFlightSchedule, 'id'>;

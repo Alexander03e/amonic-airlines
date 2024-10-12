@@ -4,16 +4,27 @@ import cn from 'classnames';
 import { Td, Tr } from 'react-super-responsive-table';
 
 type TProps = {
-    data?: (string | number)[] | undefined;
+    data?: (string | number | undefined)[] | undefined;
     onClick?: () => void;
     isActive?: boolean;
     isError?: boolean;
     isWarn?: boolean;
     isSuccess?: boolean;
+    isEdited?: boolean;
 };
 
-export const TableRow = ({ data, onClick, isActive, isError, isSuccess, isWarn }: TProps) => {
+export const TableRow = ({
+    data,
+    onClick,
+    isActive,
+    isError,
+    isSuccess,
+    isWarn,
+    isEdited,
+}: TProps) => {
     if (!data) return null;
+
+    console.log(isEdited);
 
     return (
         <Tr
@@ -22,11 +33,12 @@ export const TableRow = ({ data, onClick, isActive, isError, isSuccess, isWarn }
                 [styles.warn]: isWarn,
                 [styles.error]: isError,
                 [styles.success]: isSuccess,
+                [styles.edited]: isEdited,
             })}
             onClick={onClick}
         >
             {map(data, (item, index) => {
-                return <Td key={index}>{item}</Td>;
+                return <Td key={index}>{item ?? '-'}</Td>;
             })}
         </Tr>
     );

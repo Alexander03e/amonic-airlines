@@ -1,6 +1,8 @@
 .row {
     cursor: pointer;
 
+    position: relative;
+
     // display: grid;
     // flex-direction: row;
     grid-auto-flow: column;
@@ -14,6 +16,23 @@
     text-align: left;
 
     border: 1px solid transparent;
+
+    &.edited {
+
+        &:after {
+            content: '';
+            
+            position: absolute;
+            top: 50%;
+            transform: translate(-150%, -50%);
+            
+            width: 12px;
+            height: 12px;
+            
+            background-color: var(--secondary-base);
+            border-radius: 50%;
+        }
+    }
 
     & > td {
         white-space: nowrap;
