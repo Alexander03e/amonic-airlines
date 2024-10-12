@@ -1,6 +1,6 @@
 import { KEYS } from 'Common/types/api';
 import { ShedulesApi } from './api';
-import { IFlightSchedule, TFlightShedulePayload } from 'Common/types/flights';
+import { IFlightSchedule } from 'Common/types/flights';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const schedulesApi = ShedulesApi.getInstance();
@@ -20,11 +20,7 @@ export const useUpdateSchedule = () => {
     const queryClient = useQueryClient();
 
     return useMutation<IFlightSchedule, unknown, Partial<IFlightSchedule>>({
-        mutationFn: (data: Partial<IFlightSchedule>) => {
-            if (!data?.id) return;
-
-            return schedulesApi.updateSchedule(data);
-        },
+        mutationFn: (data: Partial<IFlightSchedule>) => schedulesApi.updateSchedule(data),
         onSuccess: (data: IFlightSchedule) => {
             if (data && data.id) {
                 queryClient.setQueryData<IFlightSchedule[]>([KEYS.FLIGHT_SCHEDULES], oldData => {

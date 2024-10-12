@@ -3,7 +3,6 @@ import { AuthContext } from './context';
 import { TUserRole } from 'Common/types/role';
 import { useUserById } from 'Common/api/user/hooks';
 import { Storage } from 'Common/utils/storage';
-import { useUserLogsUpdate } from 'Common/api/logs/hooks';
 import { useUserStore } from 'Common/store/user';
 
 interface IProps {
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }: IProps) => {
 
     const { setUser } = useUserStore();
 
-    const { mutate: updateUserLogs } = useUserLogsUpdate();
+    // const { mutate: updateUserLogs } = useUserLogsUpdate();
 
     const { data } = useUserById(id);
 

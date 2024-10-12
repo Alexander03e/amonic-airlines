@@ -29,9 +29,7 @@ export class ShedulesApi {
         return (await this._httpInstance.post('/schedules', schedule)).data;
     }
 
-    public async updateSchedule(
-        schedule: Partial<IFlightSchedule>,
-    ): Promise<IFlightSchedule | null> {
+    public async updateSchedule(schedule: Partial<IFlightSchedule>): Promise<IFlightSchedule> {
         return (await this._httpInstance.put(`/schedules`, schedule)).data;
     }
 
