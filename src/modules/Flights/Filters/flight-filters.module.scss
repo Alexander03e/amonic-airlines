@@ -1,0 +1,28 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    align-items: center;
+
+    margin-bottom: 20px;
+    padding: 20px;
+
+
+    border: 1px solid var(--primary-base);
+    border-radius: var(--gap-x2);
+
+    & > * {
+        align-self: flex-end;
+        width: 100%;
+    }
+}
+
+.out {
+    & > button {
+        margin-bottom: 20px;
+    }
+}
+
+.heightContainer {
+    overflow: visible!important;
+}

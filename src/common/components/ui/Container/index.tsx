@@ -3,7 +3,7 @@ import styles from './container.module.scss';
 import cn from 'classnames';
 
 interface IProps {
-    children: ReactNode;
+    children?: ReactNode;
     className?: string;
 }
 

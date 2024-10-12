@@ -6,8 +6,11 @@
 
 .header {
     position: sticky;
+    z-index: 999;
     top: 0;
+
     padding-block: 16px;
+
     transition: background-color var(--transition);
 
     &.scrolled {

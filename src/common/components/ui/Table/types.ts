@@ -1,4 +1,7 @@
 export interface ITableRow {
     id: unknown;
-    data: string[];
+    data: (string | number)[];
+    isWarn?: boolean;
+    isSuccess?: boolean;
+    isError?: boolean;
 }

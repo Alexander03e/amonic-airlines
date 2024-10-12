@@ -26,6 +26,7 @@
     }
 
     & > input {
+        height: 46px;
         margin-block: 6px 2px;
         padding: 10px 12px;
 
@@ -36,6 +37,10 @@
         outline: 1px solid transparent;
 
         transition: var(--transition);
+
+        &::placeholder {
+            color: var(--primary-base);
+        }
 
         &:focus {
             border-color: var(--primary-base);

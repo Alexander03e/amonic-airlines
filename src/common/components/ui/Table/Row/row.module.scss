@@ -1,21 +1,31 @@
 .row {
     cursor: pointer;
 
-    display: grid;
+    // display: grid;
+    // flex-direction: row;
     grid-auto-flow: column;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    flex-direction: row;
+    // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     align-items: center;
 
-    width: 100%;
+    // width: 100%;
+    width: fit-content;
     padding: 10px 16px;
 
     text-align: left;
 
     border: 1px solid transparent;
 
+    & > td {
+        white-space: nowrap;
+    }
+
     & > span {
         align-self: center;
+    }
+
+    &:active {
+        transform: translateY(-2px);
+        // background-color: var(--primary-base-active-light)!important;
     }
 
     &:hover {
@@ -33,9 +43,28 @@
         background-color: var(--primary-base);
     }
 
-    &.active {
-        background-color: var(--primary-base-hover-light);
-        border-block-color: var(--primary-base);
+    &.success {
+        background-color: var(--success-color)!important;
+    }
 
+    &.warn {
+        background-color: var(--secondary-base)!important;
+    }
+
+    &.error {
+        color: white;
+        background-color: var(--error-base)!important;
+        
+        &.active {
+            color: white;
+            background-color: var(--error-base)!important;
+
+        }
+    }
+
+    &.active {
+        color: var(--text-dark);
+        background-color: var(--primary-base-hover-light)!important;
+        border-bottom-color: var(--primary-base)!important;
     }
 }

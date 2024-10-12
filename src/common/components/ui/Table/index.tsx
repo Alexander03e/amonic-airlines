@@ -2,6 +2,9 @@ import { TableRow } from './Row';
 import styles from './table.module.scss';
 import map from 'lodash/map';
 import { ITableRow } from './types';
+import { Table as ResponsiveTable, Tbody } from 'react-super-responsive-table';
+import { TableHeader } from './Header';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 interface IProps {
     rows: ITableRow[];
@@ -18,21 +21,23 @@ const Table = ({ rows, rowOnClick, activeRowId, header }: IProps) => {
     };
 
     return (
-        <table className={styles.wrapper}>
-            <TableRow data={header} isHeader />
-            <tbody>
-                {map(rows, row => {
-                    return (
-                        <TableRow
-                            onClick={handleRowClick.bind(this, row.id)}
-                            isActive={activeRowId === row.id}
-                            key={row.id as string}
-                            {...row}
-                        />
-                    );
-                })}
-            </tbody>
-        </table>
+        <div className={styles.out}>
+            <ResponsiveTable className={styles.wrapper}>
+                <TableHeader data={header} />
+                <Tbody>
+                    {map(rows, row => {
+                        return (
+                            <TableRow
+                                onClick={handleRowClick.bind(this, row.id)}
+                                isActive={activeRowId === row.id}
+                                key={row.id as string}
+                                {...row}
+                            />
+                        );
+                    })}
+                </Tbody>
+            </ResponsiveTable>
+        </div>
     );
 };
 
