@@ -11,6 +11,11 @@
     border: 1px solid var(--primary-base);
     border-radius: var(--gap-x2);
 
+    &.fitContent {
+        width: fit-content!important;
+        min-width: initial;
+    }
+
     .info {
         color: var(--primary-base)
     }

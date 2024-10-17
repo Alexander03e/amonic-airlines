@@ -39,6 +39,10 @@ export const ROUTE_PATHS = {
         FLIGHTS: {
             INDEX: '/flights',
         },
+
+        BOOKING: {
+            INDEX: '/booking',
+        },
     },
 };
 

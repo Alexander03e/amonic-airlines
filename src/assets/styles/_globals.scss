@@ -12,6 +12,17 @@ button {
     outline: 0;
 }
 
+fieldset {
+    padding: 14px;
+    border: 1px solid var(--primary-base);
+    border-radius: var(--gap-x2);
+
+    legend {
+        font-weight: 700;
+        color: var(--primary-base);
+    }
+}
+
 body {
     overflow-x: hidden;
     overflow-y: scroll!important;

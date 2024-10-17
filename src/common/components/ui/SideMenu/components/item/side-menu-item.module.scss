@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    padding: 8px;
+
+    border-radius: inherit;
+
+    transition: background-color var(--transition);
+
+    .label {
+        margin-left: 8px;
+    }
+
+    .counter {
+        margin-left: auto;
+        transition: background-color var(--transition);
+
+    }
+
+    &.active {
+        background-color: var(--primary-base);
+
+        & > svg > path {
+            fill: var(--secondary-base);
+        }
+    }
+
+    &:hover {
+        & > svg > path {
+            fill: var(--secondary-base);
+        }
+    }
+
+    & > svg {
+        width: 24px;
+        min-width: 24px;
+        height: 24px;
+        min-height: 24px;
+
+        & > path {
+            transition: fill var(--transition);
+        }
+    }
+}

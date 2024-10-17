@@ -25,3 +25,10 @@ export const useQueryCache = <T>(key: string[]): T | undefined => {
 
     return queryClient.getQueryData<T>(key);
 };
+
+export const useCabinTypes = () => {
+    return useQuery({
+        queryKey: [KEYS.CABIN],
+        queryFn: async () => await commonApi.getCabinTypes(),
+    });
+};

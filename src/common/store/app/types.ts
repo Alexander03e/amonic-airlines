@@ -3,6 +3,7 @@ export type TCurrentModal =
     | '#forgotPassword'
     | '#changeUser'
     | '#changeschedule'
+    | '#blockUser'
     | null;
 
 export interface IAppStore {

@@ -1,0 +1,69 @@
+.wrapper {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+
+    heigth: 100%;
+
+    .form {
+        position: sticky;
+        top: 100px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        height: fit-content;
+
+       .settings {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+            width: 100%;
+
+            & > button {
+                flex: 1
+            } 
+
+            & > label {
+                flex: 1
+            }
+       }
+    }
+
+    .tables {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;  
+
+        & > fieldset {
+            & > span {
+                display: block;
+                padding-bottom: 12px;
+                color: var(--secondary-base);
+            }
+        }
+
+        label {
+            cursor: pointer;
+
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+
+            width: fit-content;
+
+            margin-bottoM: 14px;    
+
+            & > input {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .table {
+        height: 500px;
+    }
+}

@@ -1,5 +1,5 @@
 import 'Assets/styles/index.scss';
-import { Header } from 'Common/components';
+import { Footer, Header } from 'Common/components';
 import { AppRoutes } from './routes';
 
 function App() {
@@ -8,8 +8,8 @@ function App() {
             <Header />
 
             <AppRoutes />
-        
-            {/* <Footer /> */}
+
+            <Footer />
         </>
     );
 }

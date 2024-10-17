@@ -85,4 +85,16 @@ export interface IUpdateSchedule extends Omit<IFlightSchedule, 'aircraft' | 'rou
     arrivalAirport: string;
 }
 
+export type TCabinType = 'Economy' | 'Business' | 'First Class';
+
+/**
+ * Интерфейс для типа билетов.
+ * @prop {number} id - идентификатор типа билета.
+ * @prop {TCabinType} name - название типа билета.
+ */
+export interface ICabinType {
+    id: number;
+    name: TCabinType;
+}
+
 export type TFlightShedulePayload = Omit<IFlightSchedule, 'id'>;

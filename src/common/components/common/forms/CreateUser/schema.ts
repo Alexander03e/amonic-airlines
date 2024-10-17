@@ -8,7 +8,7 @@ export const schema = object({
     phone: phoneSchema,
     email: emailSchema,
     password: string({ message: ERRORS.REQUIRED }).min(6, { message: ERRORS.INVALID_PASSWORD }),
-    office: number({ message: ERRORS.REQUIRED }),
+    office: stringSchema,
     birthdate: dateSchema,
     role: number({ message: ERRORS.REQUIRED }),
 });

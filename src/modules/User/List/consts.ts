@@ -1,13 +1,11 @@
-import { TUserRow } from './types';
-
 export const TITLE = {
-    CHANGE: 'Изменить роль',
+    CHANGE: 'Изменить',
     DISABLE: 'Заблокировать',
     ENABLE: 'Разблокировать',
     CREATE: 'Добавить пользователя',
 };
 
-export const TABLE_ROW: TUserRow = {
+export const TABLE_ROW = {
     birthdate: 'Возраст',
     active: 'Статус',
     email: 'Email',
@@ -17,3 +15,5 @@ export const TABLE_ROW: TUserRow = {
     role: 'Роль',
     id: 'ID',
 };
+
+export const HEADER = ['ID', 'Имя', 'Фамилия', 'Email', 'Возраст', 'Роль', 'Офис', 'Статус'];

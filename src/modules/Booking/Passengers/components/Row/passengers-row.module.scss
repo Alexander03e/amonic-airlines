@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    & > p {
+        color: var(--primary-base);
+
+        & > span {
+            margin-left: 8px;
+            color: var(--secondary-base);
+        }
+    }
+}

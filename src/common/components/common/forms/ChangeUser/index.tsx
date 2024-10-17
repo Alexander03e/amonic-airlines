@@ -41,11 +41,12 @@ export const ChangeUser = () => {
 
     const onSubmit = async (data: TChangeUser) => {
         const { office, role, ...rest } = data;
+
         await updateUser({
-            ...rest,
             id: userData.id,
             office: Number(office),
             role: role,
+            ...rest,
         });
     };
 

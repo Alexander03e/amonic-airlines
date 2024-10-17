@@ -10,6 +10,7 @@ type IProps = FormHTMLAttributes<HTMLFormElement> & {
     loading?: boolean;
     error?: string;
     info?: string;
+    fitContent?: boolean;
 };
 
 export const Form = ({
@@ -21,10 +22,14 @@ export const Form = ({
     loading = false,
     error,
     info,
+    fitContent,
     ...props
 }: IProps): ReactElement => {
     return (
-        <form className={cn(styles.wrapper, className)} {...props}>
+        <form
+            className={cn(styles.wrapper, className, { [styles.fitContent]: fitContent })}
+            {...props}
+        >
             {label && (
                 <div className={styles.header}>
                     <span>{label}</span>

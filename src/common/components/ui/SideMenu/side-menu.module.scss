@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .items {
+        display: flex;
+        flex-direction: column;
+
+        padding: 8px;
+
+        background-color: white;
+        border-radius: var(--gap-x3);
+    }
+}
+
+.trigger {
+    padding: 16px;
+    border:  1px solid black;
+    border-radius: var(--gap-x2);
+}

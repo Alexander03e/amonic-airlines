@@ -1,0 +1,52 @@
+.form {
+    & > fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        padding: 14px;
+
+        border:1px solid var(--primary-base);
+        border-radius: var(--gap-x2);
+        outline: 1px solid transparent;
+
+        legend {
+            color: var(--primary-base);
+        }
+    
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+
+            .row {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap:14px;
+                width: 100%;
+                & > label {
+                    width: 100%;
+                }
+            
+            }
+            & > label {
+                width: 100%;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex: 1;
+            gap: 14px;
+            align-self: flex-start;
+            
+            width: 100%;
+            width: 100%;
+            max-width: 400px;
+
+            & > button {
+                width: 100%;
+            }
+        }
+    }
+}

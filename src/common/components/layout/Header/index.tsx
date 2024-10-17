@@ -14,6 +14,7 @@ import { ROUTE_PATHS } from 'Src/routes/config';
 import { Slide } from 'Common/components/ui/Animation';
 import { useUpdatedScheduleStore } from 'Common/store/schedule';
 import { handleToastWithPromise } from 'Common/components/ui/Toast';
+import ExitIcon from 'Assets/icons/exit.svg?react';
 
 export const Header = () => {
     const { isAuth, logout, role } = useAuthContext();
@@ -107,7 +108,11 @@ export const Header = () => {
                                     variant='success'
                                 />
                             </Slide>
-                            <Button onClick={handleLogout} label={LABELS.SIGN_OUT} />
+                            <Button
+                                icon={<ExitIcon />}
+                                onClick={handleLogout}
+                                label={LABELS.SIGN_OUT}
+                            />
                         </div>
                     </>
                 )}

@@ -1,6 +1,8 @@
 import { AxiosInstance } from 'axios';
 import {
+    IBlockUserPayload,
     IUser,
+    IUserBlocking,
     TUserAuthPayload,
     TUserAuthResponse,
     TUserRegPayload,
@@ -45,5 +47,13 @@ export class UserApi {
 
     async deleteUser(id: number): Promise<IUser> {
         return (await this._httpInstance.delete(`/users/${id}`)).data;
+    }
+
+    async blockUser(data: IBlockUserPayload): Promise<IUserBlocking> {
+        return (await this._httpInstance.post('/usersblocking', { ...data })).data;
+    }
+
+    async unlockUser(id: number): Promise<IUserBlocking> {
+        return (await this._httpInstance.delete(`/usersblocking/${id}`)).data;
     }
 }

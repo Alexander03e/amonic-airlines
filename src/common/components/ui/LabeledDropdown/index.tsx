@@ -23,7 +23,7 @@ export const LabeledDropdown = forwardRef<Dropdown, IProps>(
         const handleChange = (value: number) => {
             if (!onChange) return;
 
-            onChange(value);
+            onChange(String(value));
         };
 
         return (

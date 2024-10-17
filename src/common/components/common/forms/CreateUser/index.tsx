@@ -30,9 +30,9 @@ export const CreateUserForm = () => {
     const { mutate: addUser, isError, isSuccess } = useAddUser();
 
     const onSubmit = (data: TSignUp) => {
-        const { birthdate, ...rest } = data;
+        const { birthdate, office, ...rest } = data;
         const formattedBirthdate = birthdate.split('.').reverse().join('-');
-        addUser({ birthdate: formattedBirthdate, ...rest });
+        addUser({ birthdate: formattedBirthdate, office: Number(office), ...rest });
     };
 
     useEffect(() => {

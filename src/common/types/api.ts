@@ -13,6 +13,7 @@ export const KEYS = {
 
     /** FLIGHTS */
     FLIGHT_SCHEDULES: 'flight_schedules',
+    CABIN: 'cabin',
 
     /** AIRPORTS */
     AIRPORTS: 'airports',

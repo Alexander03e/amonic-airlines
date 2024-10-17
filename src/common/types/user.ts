@@ -39,6 +39,28 @@ interface IUserLogsDataResponse {
 }
 
 /**
+ * Интерфейс блокировки пользователя.
+ * @prop {number} id - Идентификатор блокировки.
+ * @prop {IUser} user - Пользователь.
+ * @prop {string} blockingReason - Причина блокировки.
+ */
+interface IUserBlocking {
+    id: number;
+    user: IUser;
+    blockingReason: string;
+}
+
+/**
+ * Интерфейс блокировки пользователя
+ * @prop {number} user - Идентификатор пользователя.
+ * @prop {string} blockingReason - Причина блокировки.
+ */
+interface IBlockUserPayload {
+    user: number;
+    blockingReason: string;
+}
+
+/**
  * Интерфейс пользователя.
  * @prop {number} id - Идентификатор пользователя.
  * @prop {string} firstName - Имя пользователя.
@@ -47,6 +69,7 @@ interface IUserLogsDataResponse {
  * @prop {IOffice} office - Офис пользователя.
  * @prop {string} birthdate - Дата рождения пользователя.
  * @prop {IRole} role - Роль пользователя.
+ * @prop {IUserBlocking | null} userBlocking - Блокировка пользователя.
  * @prop {boolean | null} [active] - Активность пользователя.
  */
 interface IUser {
@@ -57,6 +80,7 @@ interface IUser {
     office: IOffice;
     birthdate: string;
     role: IRole;
+    userBlocking?: IUserBlocking | null;
     active?: boolean | null;
 }
 
@@ -95,4 +119,6 @@ export type {
     IUserLogs,
     IUserLogsDataResponse,
     IUserLogPayload,
+    IUserBlocking,
+    IBlockUserPayload,
 };

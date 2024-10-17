@@ -7,4 +7,8 @@ export const LINKS = [
         label: 'Рейсы',
         src: '/flights',
     },
+    {
+        label: 'Бронь',
+        src: '/booking',
+    },
 ];

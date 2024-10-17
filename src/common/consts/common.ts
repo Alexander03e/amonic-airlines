@@ -15,3 +15,9 @@ export const LABELS = {
     SAVE: 'Сохранить',
     CANCEL: 'Отменить',
 };
+
+export const KF = {
+    BUSINESS: 1.33,
+    FIRST: 1.755,
+    ECONOMY: 1,
+};

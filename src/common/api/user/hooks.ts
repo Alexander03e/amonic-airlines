@@ -1,6 +1,8 @@
 import { useMutation, UseMutationResult, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+    IBlockUserPayload,
     IUser,
+    IUserBlocking,
     TUserAuthPayload,
     TUserAuthResponse,
     TUserRegPayload,
@@ -57,6 +59,51 @@ export const useUpdateUser = () => {
     });
 };
 
+/** Хук для блокировки пользователя */
+
+export const useBlockUser = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<IUserBlocking, unknown, IBlockUserPayload>({
+        mutationFn: (data: IBlockUserPayload) => userApi.blockUser(data),
+        onSuccess: (data: IUserBlocking) => {
+            if (data && data.id) {
+                queryClient.invalidateQueries({ queryKey: [KEYS.USER, data.id] });
+
+                queryClient.setQueryData<IUser[]>([KEYS.USERS], oldData => {
+                    if (!oldData) return [];
+
+                    return oldData.map(user => {
+                        return user.id === data.user.id ? { ...user, userBlocking: data } : user;
+                    });
+                });
+            }
+        },
+    });
+};
+
+/** Хук для разблокировки пользователя */
+export const useUnblockUser = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<IUserBlocking, unknown, number>({
+        mutationFn: (id: number) => userApi.unlockUser(id),
+        onSuccess: (data: IUserBlocking) => {
+            if (data && data.id) {
+                queryClient.invalidateQueries({ queryKey: [KEYS.USER, data.id] });
+
+                queryClient.setQueryData<IUser[]>([KEYS.USERS], oldData => {
+                    if (!oldData) return [];
+
+                    return oldData.map(user =>
+                        user.id === data.user.id ? { ...user, userBlocking: null } : user,
+                    );
+                });
+            }
+        },
+    });
+};
+
 /** Хук для авторизации */
 export const useAuth = (): UseMutationResult<TUserAuthResponse, Error, TUserAuthPayload> => {
     return useMutation<TUserAuthResponse, Error, TUserAuthPayload>({
@@ -72,7 +119,7 @@ export const useUserById = (id: number | null) => {
     return useQuery({
         queryKey: [KEYS.ME],
         queryFn: async () => {
-            if (!id) return 
+            if (!id) return;
             return await userApi.getUserById(id);
         },
         enabled: !!id,

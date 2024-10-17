@@ -5,15 +5,19 @@ import { ITableRow } from './types';
 import { Table as ResponsiveTable, Tbody } from 'react-super-responsive-table';
 import { TableHeader } from './Header';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import cn from 'classnames';
+import { Loader } from '../Loader';
 
 interface IProps {
     rows: ITableRow[];
     activeRowId?: unknown;
     rowOnClick?: (id: unknown) => void;
+    className?: string;
     header?: string[];
+    isLoading?: boolean;
 }
 
-const Table = ({ rows, rowOnClick, activeRowId, header }: IProps) => {
+const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: IProps) => {
     const handleRowClick = (id: unknown) => {
         if (!rowOnClick) return;
 
@@ -23,10 +27,11 @@ const Table = ({ rows, rowOnClick, activeRowId, header }: IProps) => {
     console.log(rows);
 
     return (
-        <div className={styles.out}>
+        <div className={cn(styles.out, className)}>
             <ResponsiveTable className={styles.wrapper}>
                 <TableHeader data={header} />
                 <Tbody>
+                    {isLoading && <Loader />}
                     {map(rows, row => {
                         return (
                             <TableRow
