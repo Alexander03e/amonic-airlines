@@ -5,15 +5,17 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
-    
-    
+
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
     .error {
         @include tga-regular-small;
 
         display: block;
-        // line-height: 2px!important;
         color: var(--error-base);
-        // white-space: nowrap;
         transition: var(--transition);
     }
     
@@ -40,6 +42,7 @@
 
         &::placeholder {
             color: var(--primary-base);
+            filter: opacity(0.5);
         }
 
         &:focus {

@@ -29,6 +29,7 @@ export const BookingSearchForm = () => {
     });
 
     const setBookingType = useBookingStore(state => state.setBookingType);
+    const setCabinType = useBookingStore(state => state.setCabinType);
 
     const onReset = () => {
         reset();
@@ -37,7 +38,7 @@ export const BookingSearchForm = () => {
     const { data: cabinData } = useCabinTypes();
     const { data: airportsData } = useAirports();
 
-    const { from, to } = useWatch({ control });
+    const { from, to, type, cabinType } = useWatch({ control });
 
     const airportsOptions = airportsData?.map(item => ({
         value: String(item.id),
@@ -53,6 +54,14 @@ export const BookingSearchForm = () => {
         { value: EBookingSearchType.RETURN, name: LABELS.RETURN },
         { value: EBookingSearchType.ONE_WAY, name: LABELS.ONE_WAY },
     ];
+
+    useEffect(() => {
+        const findedCabin = cabinData?.find(item => item.id === Number(cabinType));
+
+        if (cabinType && findedCabin) {
+            setCabinType(findedCabin?.name ?? null);
+        }
+    }, [cabinType]);
 
     useEffect(() => {
         if (cabinData && setValue) {
@@ -142,6 +151,7 @@ export const BookingSearchForm = () => {
                         <LabeledInput
                             type='date'
                             placeholder='дд.мм.гггг'
+                            disabled={type === EBookingSearchType.ONE_WAY}
                             {...register('returnDate')}
                             error={errors.returnDate?.message}
                             label={LABELS.RETURN_DATE}

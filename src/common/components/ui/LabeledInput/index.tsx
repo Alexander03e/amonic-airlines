@@ -18,8 +18,14 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const LabeledInput = forwardRef<HTMLInputElement, IProps>(
     ({ label, error, mask, ...props }, ref): ReactElement => {
+        const { disabled } = props;
         return (
-            <label className={cn(styles.wrapper, { [styles.error]: error })}>
+            <label
+                className={cn(styles.wrapper, {
+                    [styles.error]: error,
+                    [styles.disabled]: disabled,
+                })}
+            >
                 {label && <span className={styles.label}>{label}</span>}
                 {!mask ? (
                     <input ref={ref} {...props} />

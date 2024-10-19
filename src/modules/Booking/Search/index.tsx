@@ -50,6 +50,8 @@ export const BookingSearch = () => {
         }
     };
 
+    console.log(cabinType)
+
     const selectedLength = useMemo(
         () => Object.values(selectedFlights)?.filter(item => Boolean(item))?.length,
         [selectedFlights],

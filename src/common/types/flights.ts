@@ -97,4 +97,16 @@ export interface ICabinType {
     name: TCabinType;
 }
 
+/**
+ * Интерфейс для поиска расписания рейсов.
+ * @prop {string} date - дата вылета.
+ * @prop {string} departureAirport - IATA-код аэропорта отправления.
+ * @prop {string} arrivalAirport - IATA-код аэропорта прибытия.
+ */
+export interface ISearchSchedulesPayload {
+    date: string;
+    departureAirport: string;
+    arrivalAirport: string;
+}
+
 export type TFlightShedulePayload = Omit<IFlightSchedule, 'id'>;

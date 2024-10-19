@@ -24,8 +24,6 @@ const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: 
         rowOnClick(id);
     };
 
-    console.log(rows);
-
     return (
         <div className={cn(styles.out, className)}>
             <ResponsiveTable className={styles.wrapper}>
