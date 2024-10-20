@@ -1,0 +1,32 @@
+.wrapper {
+    position: sticky;
+    top: 100px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    height: 100%;
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        label {
+            width: 100%;
+            // max-width: 400px;
+        }
+    }
+
+    .fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}

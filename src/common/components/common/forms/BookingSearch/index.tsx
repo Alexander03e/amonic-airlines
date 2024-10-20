@@ -6,13 +6,19 @@ import { useCabinTypes } from 'Common/api/common/hooks';
 import { LABELS } from './consts';
 import { useAirports } from 'Common/api/airports/hooks';
 import { RadioGroup } from 'Common/components/ui/RadioGroup';
-import { useEffect } from 'react';
-import { getClassByValue } from './utils/index';
+import { useEffect, useState } from 'react';
+import { getClassByValue } from 'Common/utils/getClassByValue';
 import styles from './booking-search-form.module.scss';
 import { EBookingSearchType } from './enums';
 import { useBookingStore } from 'Common/store/booking';
+import { TCabinType } from 'Common/types/flights';
+import { ShedulesApi } from 'Common/api/shedules/api';
+import { formatDateToYYYYDDMM } from '../../../../utils/formatDateToYYYYDDMM';
+
+const shedulesApi = ShedulesApi.getInstance();
 
 export const BookingSearchForm = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const {
         register,
         formState: { errors },
@@ -28,25 +34,33 @@ export const BookingSearchForm = () => {
         },
     });
 
-    const setBookingType = useBookingStore(state => state.setBookingType);
-    const setCabinType = useBookingStore(state => state.setCabinType);
+    const {
+        setOutboundFlights,
+        setReturnFlights,
+        setBookingType,
+        setCabinType,
+        setSelectedOutbound,
+        setSelectedReturn,
+    } = useBookingStore();
 
     const onReset = () => {
         reset();
+        setOutboundFlights(null);
+        setReturnFlights(null);
     };
 
     const { data: cabinData } = useCabinTypes();
     const { data: airportsData } = useAirports();
 
-    const { from, to, type, cabinType } = useWatch({ control });
+    const { from, to, type } = useWatch({ control });
 
     const airportsOptions = airportsData?.map(item => ({
-        value: String(item.id),
+        value: String(item.iatacode),
         label: item.name,
     }));
 
     const cabinOptions = cabinData?.map(item => ({
-        value: String(item.id),
+        value: String(item.name),
         label: getClassByValue(item.name),
     }));
 
@@ -56,29 +70,56 @@ export const BookingSearchForm = () => {
     ];
 
     useEffect(() => {
-        const findedCabin = cabinData?.find(item => item.id === Number(cabinType));
-
-        if (cabinType && findedCabin) {
-            setCabinType(findedCabin?.name ?? null);
-        }
-    }, [cabinType]);
-
-    useEffect(() => {
         if (cabinData && setValue) {
             setValue('cabinType', cabinOptions?.[0]?.value ?? '');
+            const findedCabin = cabinData?.find(
+                item => item.name === (cabinOptions?.[0].value as TCabinType),
+            );
+
+            setCabinType(findedCabin ?? null);
         }
     }, [cabinData, setValue]);
 
-    const onSubmit = (data: TBookingForm) => {
-        console.log(data);
+    const onSubmit = async (data: TBookingForm) => {
         setBookingType(data.type ?? null);
+        const findedCabin = cabinData?.find(item => item.name === (data.cabinType as TCabinType));
+        setCabinType(findedCabin ?? null);
+
+        setIsLoading(true);
+        try {
+            const outboundFlightsApi = await shedulesApi.getSchedulesByFilters({
+                arrivalAirport: data.to,
+                date: formatDateToYYYYDDMM(data.outboundDate),
+                departureAirport: data.from,
+            });
+            setOutboundFlights(outboundFlightsApi);
+        } catch (e) {
+            console.log(e);
+            setOutboundFlights(null);
+        }
+
+        try {
+            const returnFlightsApi = await shedulesApi.getSchedulesByFilters({
+                arrivalAirport: data.from,
+                date: formatDateToYYYYDDMM(data.returnDate),
+                departureAirport: data.to,
+            });
+            setReturnFlights(returnFlightsApi);
+        } catch (e) {
+            console.log(e);
+            setReturnFlights(null);
+        }
+
+        setIsLoading(false);
+        setSelectedOutbound(null);
+        setSelectedReturn(null);
     };
 
     return (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <fieldset>
                 <legend>{LABELS.FORM}</legend>
-
+                {/* <DevTool control={control} /> */}
                 <div className={styles.inputs}>
                     <div className={styles.row}>
                         <Controller
@@ -159,7 +200,12 @@ export const BookingSearchForm = () => {
                     </div>
                 </div>
                 <div className={styles.buttons}>
-                    <Button type='submit' variant='primary' label={LABELS.SEARCH} />
+                    <Button
+                        isLoading={isLoading}
+                        type='submit'
+                        variant='primary'
+                        label={LABELS.SEARCH}
+                    />
                     <Button onClick={onReset} type='button' variant='danger' label={LABELS.RESET} />
                 </div>
             </fieldset>

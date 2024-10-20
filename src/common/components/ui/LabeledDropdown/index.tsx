@@ -20,7 +20,7 @@ interface IProps {
 
 export const LabeledDropdown = forwardRef<Dropdown, IProps>(
     ({ options, label, error, value, onChange, placeholder = PLACEHOLDER, ...props }, ref) => {
-        const handleChange = (value: number) => {
+        const handleChange = (value: number | string) => {
             if (!onChange) return;
 
             onChange(String(value));
@@ -34,7 +34,7 @@ export const LabeledDropdown = forwardRef<Dropdown, IProps>(
                     value={value ? String(value) : undefined}
                     options={options}
                     placeholder={placeholder}
-                    onChange={({ value }) => handleChange(Number(value))}
+                    onChange={({ value }) => handleChange(value)}
                     placeholderClassName={styles.placeholder}
                     className={cn(styles.wrapper, { [styles.error]: error })}
                     controlClassName={styles.control}

@@ -3,6 +3,7 @@ import {
     IFlightSchedule,
     ISearchSchedulesPayload,
     TFlightShedulePayload,
+    TScheduleRoutes,
 } from 'Common/types/flights';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
@@ -25,7 +26,7 @@ export class ShedulesApi {
         return (await this._httpInstance.get('/schedules')).data;
     }
 
-    public async getSchedulesByFilters(data: ISearchSchedulesPayload): Promise<IFlightSchedule[]> {
+    public async getSchedulesByFilters(data: ISearchSchedulesPayload): Promise<TScheduleRoutes> {
         return (await this._httpInstance.post('/schedules/search', { ...data })).data;
     }
 

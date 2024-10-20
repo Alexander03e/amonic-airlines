@@ -1,23 +1,41 @@
-import { IFlightSchedule, TCabinType } from 'Common/types/flights';
+import { ICabinType, IFlightSchedule, IScheduleRoute } from 'Common/types/flights';
 import { EBookingStep } from './enums';
 import { EBookingSearchType } from 'Common/components/common/forms/BookingSearch/enums';
+import { IPassenger } from 'Common/types/booking';
+import { TScheduleRoutes } from '../../types/flights';
+
+export type IStorePassenger = IPassenger & {
+    id: unknown;
+};
+
+export type IFlightScheduleWithTransfer = IFlightSchedule & {
+    transfer?: number;
+};
+
+export type IFlightScheduleWithCabin = IScheduleRoute & {
+    cabinType?: ICabinType | null;
+};
 
 export interface IBookingStore {
     step: EBookingStep;
-    outboundFlights: IFlightSchedule[] | [];
-    returnFlights: IFlightSchedule[] | [];
+    outboundFlights: TScheduleRoutes | null;
+    returnFlights: TScheduleRoutes | null;
     bookingType: EBookingSearchType | null;
-    cabinType: TCabinType | null;
+    cabinType: ICabinType | null;
     selectedFlights: {
-        outbound: IFlightSchedule | null;
-        return: IFlightSchedule | null;
+        outbound: IFlightScheduleWithCabin | null;
+        return: IFlightScheduleWithCabin | null;
     };
+    passengers: IStorePassenger[] | null;
 
-    setSelectedOutbound: (flight: IFlightSchedule | null) => void;
-    setSelectedReturn: (flight: IFlightSchedule | null) => void;
-    setCabinType: (type: TCabinType | null) => void;
+    clear: () => void;
+    removePassenger: (id: unknown) => void;
+    setPassengers: (passengers: IStorePassenger | null) => void;
+    setSelectedOutbound: (flight: IFlightScheduleWithCabin | null) => void;
+    setSelectedReturn: (flight: IFlightScheduleWithCabin | null) => void;
+    setCabinType: (type: ICabinType | null) => void;
     setBookingType: (type: EBookingSearchType | null) => void;
-    setOutboundFlights: (flights: IFlightSchedule[] | null) => void;
-    setReturnFlights: (flights: IFlightSchedule[] | null) => void;
+    setOutboundFlights: (flights: TScheduleRoutes | null) => void;
+    setReturnFlights: (flights: TScheduleRoutes | null) => void;
     setStep: (step: EBookingStep) => void;
 }

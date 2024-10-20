@@ -1,6 +1,6 @@
 import { KEYS } from 'Common/types/api';
 import { ShedulesApi } from './api';
-import { IFlightSchedule } from 'Common/types/flights';
+import { IFlightSchedule, ISearchSchedulesPayload, TScheduleRoutes } from 'Common/types/flights';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const schedulesApi = ShedulesApi.getInstance();
@@ -36,5 +36,19 @@ export const useUpdateSchedule = () => {
                 });
             }
         },
+    });
+};
+
+export const useScheduleRoutes = (data: ISearchSchedulesPayload) => {
+    // return useQuery<TScheduleRoutes[]>({
+    //     queryKey: [KEYS.SCHEDULE_ROUTES, data.arrivalAirport, data.date, data.departureAirport],
+    //     queryFn: async () => {
+    //         return await schedulesApi.getSchedulesByFilters(data);
+    //     },
+    // });
+
+    return useMutation<TScheduleRoutes[], unknown, ISearchSchedulesPayload>({
+        mutationFn: (data: ISearchSchedulesPayload) => schedulesApi.getSchedulesByFilters(data),
+        mutationKey: [KEYS.SCHEDULE_ROUTES, data.arrivalAirport, data.date, data.departureAirport],
     });
 };

@@ -71,6 +71,13 @@ export interface IFlightSchedule {
 
 export type TUpdateAction = 'ADD' | 'EDIT';
 
+export interface IScheduleRoute extends IFlightSchedule {
+    transferCount?: number;
+    transfers?: IFlightSchedule[];
+}
+
+export type TScheduleRoutes = IScheduleRoute[][];
+
 /**
  * Интерфейс для обновления расписания рейса.
  * @prop {TUpdateAction} action - действие.

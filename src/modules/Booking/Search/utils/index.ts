@@ -1,9 +1,9 @@
 import { KF } from 'Common/consts/common';
-import { IFlightSchedule, TCabinType } from 'Common/types/flights';
+import { IScheduleRoute, TCabinType } from 'Common/types/flights';
 import map from 'lodash/map';
 
 export const getScheduleOptions = (
-    schedules: IFlightSchedule[] | undefined,
+    schedules: IScheduleRoute[] | undefined,
     cabinType: TCabinType | null,
 ) => {
     if (schedules?.length === 0 || !schedules) {
@@ -31,8 +31,8 @@ export const getScheduleOptions = (
             item.date,
             item.time,
             item.flightNumber,
-            `${getCabinPrice(item.economyPrice)}$`,
-            0,
+            `${Math.round(getCabinPrice(item.economyPrice))}$`,
+            item.transferCount ?? 0,
         ],
     }));
 };
