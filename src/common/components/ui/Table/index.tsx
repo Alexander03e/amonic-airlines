@@ -23,12 +23,12 @@ const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: 
 
         rowOnClick(id);
     };
-
-    console.log(rows);
-
     return (
         <div className={cn(styles.out, className)}>
             <ResponsiveTable className={styles.wrapper}>
+                {rows.length === 0 && !isLoading && (
+                    <p style={{ whiteSpace: 'nowrap', marginBlock: '20px' }}>Данных нет</p>
+                )}
                 <TableHeader data={header} />
                 <Tbody>
                     {isLoading && <Loader />}
@@ -48,7 +48,5 @@ const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: 
         </div>
     );
 };
-
-Table.Row = TableRow;
 
 export { Table };

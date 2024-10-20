@@ -8,7 +8,7 @@ export const schema = object({
     to: stringSchema,
     cabinType: string({ message: ERRORS.REQUIRED }),
     type: nativeEnum(EBookingSearchType).optional(),
-    outboundDate: string().optional(),
+    outboundDate: stringSchema,
     returnDate: string().optional(),
 });
 

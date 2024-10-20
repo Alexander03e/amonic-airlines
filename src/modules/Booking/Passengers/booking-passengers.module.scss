@@ -6,3 +6,35 @@
         flex: 1;
     }
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tableWrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+
+}
+
+.table {
+    height: 440px;
+}
+
+.tableInner {
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+        margin-bottom: 20px;
+    }
+}
+
+.tableButtons {
+    display: flex;
+    gap: 20px;
+}

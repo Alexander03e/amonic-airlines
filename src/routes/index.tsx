@@ -6,6 +6,7 @@ import { useAuthContext } from 'Common/components/provider/Auth/context';
 import { AuthPage } from 'Pages/Auth';
 import { AdminRoutes } from 'Pages/Admin';
 import { UserRoutes } from 'Pages/User';
+import { TicketsPage } from 'Pages/Tickets';
 
 export const AppRoutes = () => {
     const { isAuth, role } = useAuthContext();
@@ -39,6 +40,7 @@ export const AppRoutes = () => {
                 <Route element={auth} path={ROUTE_PATHS.AUTH.INDEX} />
                 <Route element={route} path='/*' />
                 <Route element={<NotFound />} path='*' />
+                <Route element={<TicketsPage />} path={ROUTE_PATHS.TICKETS.INDEX} />
             </Route>
         </Routes>
     );

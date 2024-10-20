@@ -6,9 +6,14 @@ import { EBookingStep } from 'Common/store/booking/enums';
 import { BookingPassengers } from 'Src/modules/Booking/Passengers';
 import BackIcon from 'Assets/icons/back.svg?react';
 export const BookingPage = () => {
-    const { step, setStep } = useBookingStore();
+    const { step, setStep, setPassengers, setSelectedOutbound, setSelectedReturn } =
+        useBookingStore();
 
     const onClickBack = () => {
+        setSelectedOutbound(null);
+        setSelectedReturn(null);
+        setPassengers(null);
+
         switch (step) {
             case EBookingStep.PASSENGERS:
                 setStep(EBookingStep.SEARCH);

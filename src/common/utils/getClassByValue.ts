@@ -1,6 +1,6 @@
 import { TCabinType } from 'Common/types/flights';
 
-export const getClassByValue = (value: TCabinType | string | undefined): string => {
+export const getClassByValue = (value: TCabinType | string | undefined | null): string => {
     if (!value) return '';
 
     switch (value) {

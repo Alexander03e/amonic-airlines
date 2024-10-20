@@ -4,6 +4,7 @@ export type TCurrentModal =
     | '#changeUser'
     | '#changeschedule'
     | '#blockUser'
+    | '#confirmPayment'
     | null;
 
 export interface IAppStore {

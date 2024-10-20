@@ -1,5 +1,10 @@
 import { AxiosInstance } from 'axios';
-import { IFlightSchedule, TFlightShedulePayload } from 'Common/types/flights';
+import {
+    IFlightSchedule,
+    ISearchSchedulesPayload,
+    TFlightShedulePayload,
+    TScheduleRoutes,
+} from 'Common/types/flights';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
 
 export class ShedulesApi {
@@ -19,6 +24,10 @@ export class ShedulesApi {
 
     public async getSchedules(): Promise<IFlightSchedule[]> {
         return (await this._httpInstance.get('/schedules')).data;
+    }
+
+    public async getSchedulesByFilters(data: ISearchSchedulesPayload): Promise<TScheduleRoutes> {
+        return (await this._httpInstance.post('/schedules/search', { ...data })).data;
     }
 
     public async getScheduleById(id: number): Promise<IFlightSchedule> {

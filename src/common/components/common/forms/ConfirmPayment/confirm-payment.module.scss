@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: left;
+ 
+    .buttons {
+        display: flex;
+        gap: 16px;
+        width: 100%;
+    }
+}
+
+.paragraph {
+    margin-right: auto;
+    color: var(--primary-base);
+
+    & > span {
+        font-weight: 700;
+    }
+}

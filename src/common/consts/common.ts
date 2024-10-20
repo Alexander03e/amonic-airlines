@@ -21,3 +21,8 @@ export const KF = {
     FIRST: 1.755,
     ECONOMY: 1,
 };
+
+export const MASKS = {
+    PHONE: '+7 (999) 999-99-99',
+    BIRTHDATE: '9999.99.99',
+};

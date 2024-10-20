@@ -8,7 +8,7 @@ import { Table } from 'Common/components/ui/Table';
 import { HEADER, LABELS } from './consts';
 import { Slide } from 'Common/components/ui/Animation';
 import { Button, LabeledInput } from 'Common/components';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { EBookingStep } from 'Common/store/booking/enums';
 
 export const BookingSearch = () => {
@@ -19,31 +19,88 @@ export const BookingSearch = () => {
         cabinType,
         selectedFlights,
         setSelectedReturn,
+        setOutboundFlights,
+        setReturnFlights,
         setSelectedOutbound,
+        outboundFlights,
+        returnFlights,
         setStep,
     } = useBookingStore();
 
-    const tableOptions = getScheduleOptions(data, cabinType);
+    useEffect(() => {
+        setOutboundFlights(null);
+        setReturnFlights(null);
+    }, []);
+
+    const outboundArray = outboundFlights
+        ? outboundFlights.map(arr => {
+              if (arr.length > 1) {
+                  return {
+                      ...arr[0],
+                      economyPrice: arr.reduce((acc, value) => value.economyPrice + acc, 0),
+                      route: {
+                          ...arr[0].route,
+                          arrivalAirport: arr[arr.length - 1].route.arrivalAirport,
+                      },
+                      transferCount: arr.length - 1,
+                      transfers: arr,
+                  };
+              } else {
+                  return arr[0];
+              }
+          })
+        : null;
+
+    const returnArray = returnFlights
+        ? returnFlights.map(arr => {
+              if (arr.length > 1) {
+                  return {
+                      ...arr[0],
+                      economyPrice: arr.reduce((acc, value) => value.economyPrice + acc, 0),
+                      route: {
+                          ...arr[0].route,
+                          arrivalAirport: arr[arr.length - 1].route.arrivalAirport,
+                      },
+                      transferCount: arr.length - 1,
+                      transfers: arr,
+                  };
+              } else {
+                  return arr[0];
+              }
+          })
+        : null;
+
+    const outboundOptions = getScheduleOptions(outboundArray ?? data, cabinType?.name ?? null);
+
+    const returnOptions = getScheduleOptions(returnArray ?? data, cabinType?.name ?? null);
 
     const handeSelect = (id: unknown, type: 'return' | 'outbound') => {
-        const finded = data?.find(schedule => schedule.id === id);
-
-        if (!finded) return;
-
         switch (type) {
             case 'outbound':
-                if (selectedFlights.outbound?.id === finded.id) {
-                    setSelectedOutbound(null);
-                    return;
+                {
+                    const arr = outboundArray ?? data;
+                    const finded = arr?.find(item => item.id === id);
+
+                    if (!finded) return;
+                    if (selectedFlights.outbound?.id === finded.id) {
+                        setSelectedOutbound(null);
+                        return;
+                    }
+                    setSelectedOutbound({ cabinType, ...finded });
                 }
-                setSelectedOutbound(finded);
                 break;
             case 'return':
-                if (selectedFlights.return?.id === finded.id) {
-                    setSelectedReturn(null);
-                    return;
+                {
+                    const arr = returnArray ?? data;
+
+                    const finded = arr?.find(item => item.id === id);
+                    if (!finded) return;
+                    if (selectedFlights.return?.id === finded.id) {
+                        setSelectedReturn(null);
+                        return;
+                    }
+                    setSelectedReturn({ cabinType, ...finded });
                 }
-                setSelectedReturn(finded);
                 break;
             default:
                 break;
@@ -72,7 +129,7 @@ export const BookingSearch = () => {
                         rowOnClick={(id: unknown) => handeSelect(id, 'outbound')}
                         className={styles.table}
                         header={HEADER}
-                        rows={tableOptions}
+                        rows={outboundOptions}
                     />
                 </fieldset>
 
@@ -85,7 +142,7 @@ export const BookingSearch = () => {
                             rowOnClick={(id: unknown) => handeSelect(id, 'return')}
                             className={styles.table}
                             header={HEADER}
-                            rows={tableOptions}
+                            rows={returnOptions}
                         />
                     </fieldset>
                 </Slide>

@@ -29,6 +29,10 @@ export const ROUTE_PATHS = {
         },
     },
 
+    TICKETS: {
+        INDEX: '/tickets',
+    },
+
     ADMIN: {
         INDEX: '/admin',
 
