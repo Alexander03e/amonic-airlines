@@ -48,6 +48,9 @@ export const useScheduleRoutes = (data: ISearchSchedulesPayload) => {
     // });
 
     return useMutation<TScheduleRoutes[], unknown, ISearchSchedulesPayload>({
+        
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         mutationFn: (data: ISearchSchedulesPayload) => schedulesApi.getSchedulesByFilters(data),
         mutationKey: [KEYS.SCHEDULE_ROUTES, data.arrivalAirport, data.date, data.departureAirport],
     });

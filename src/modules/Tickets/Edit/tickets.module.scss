@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 900px;
+    
+    .top {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 20px;
+        align-items: flex-end;
+        
+        width: 600px;
+
+    }
+    
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    p {
+        color: var(--primary-base);
+    }
+}
+
+.input {
+    width: 100%!important;
+}
+
+.flights {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.saveOptions {
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+}
