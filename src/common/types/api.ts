@@ -7,6 +7,10 @@ export const KEYS = {
     ROLES: 'roles',
     ME: 'me',
 
+    /** TICKETS */
+    AMENITIES: 'amenities',
+    TICKETS: 'tickets',
+    AMENITY_CABIN_TYPE: 'amenity_cabin_type',
     /** LOGS */
     LOGS: 'logs',
     ALL_LOGS: 'all_logs',
