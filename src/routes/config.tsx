@@ -47,6 +47,10 @@ export const ROUTE_PATHS = {
         BOOKING: {
             INDEX: '/booking',
         },
+
+        SURVEYS: {
+            INDEX: '/surveys',
+        },
     },
 };
 

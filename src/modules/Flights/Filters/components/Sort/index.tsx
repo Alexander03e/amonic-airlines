@@ -5,8 +5,7 @@ import { ReactElement } from 'react';
 export const Sort = (): ReactElement => {
     const options = [
         { value: 'date/asc', label: 'По дате ▼' },
-        { value: 'date/desc', label: 'По дате ▲' },
-        { value: 'cost/asc', label: 'По цене ▲' },
+        { value: 'cost/asc', label: 'По цене ▼' },
         { value: 'cost/desc', label: 'По цене ▲' },
         { value: 'confirmed/true', label: 'Подтвержденные' },
         { value: 'confirmed/false', label: 'Неподтвержденные' },

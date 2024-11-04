@@ -85,11 +85,12 @@ export type TScheduleRoutes = IScheduleRoute[][];
  * @prop {string} departureAirport - IATA-код аэропорта отправления.
  * @prop {string} arrivalAirport - IATA-код аэропорта прибытия.
  */
-export interface IUpdateSchedule extends Omit<IFlightSchedule, 'aircraft' | 'route' | 'id'> {
+export interface IUpdateSchedule extends Omit<IFlightSchedule, 'aircraft' | 'route' | 'id' | 'confirmed'> {
     action: TUpdateAction;
     aircraft: number;
     departureAirport: string;
     arrivalAirport: string;
+    confirmed: "OK" | "CANCEL" | boolean;
 }
 
 export type TCabinType = 'Economy' | 'Business' | 'First Class';
@@ -116,4 +117,7 @@ export interface ISearchSchedulesPayload {
     arrivalAirport: string;
 }
 
-export type TFlightShedulePayload = Omit<IFlightSchedule, 'id'>;
+export type TFlightShedulePayload = Omit<IFlightSchedule, 'id' | 'route' | 'aircraft'> & { 
+    route: number;
+    aircraft: number
+};

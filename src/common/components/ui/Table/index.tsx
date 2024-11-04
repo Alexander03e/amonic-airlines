@@ -15,6 +15,7 @@ interface IProps {
     className?: string;
     header?: string[];
     isLoading?: boolean;
+    isError?: boolean;
 }
 
 const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: IProps) => {
@@ -23,6 +24,9 @@ const Table = ({ rows, rowOnClick, activeRowId, header, isLoading, className }: 
 
         rowOnClick(id);
     };
+    if (!rows[0]?.id) {
+        return <p>Данные не найдены</p>;
+    }
     return (
         <div className={cn(styles.out, className)}>
             <ResponsiveTable className={styles.wrapper}>

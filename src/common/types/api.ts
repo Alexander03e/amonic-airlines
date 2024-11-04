@@ -7,10 +7,14 @@ export const KEYS = {
     ROLES: 'roles',
     ME: 'me',
 
+    FULL_REPORTS: 'full_reports',
+    REPORTS: 'reports',
+
     /** TICKETS */
     AMENITIES: 'amenities',
     TICKETS: 'tickets',
     AMENITY_CABIN_TYPE: 'amenity_cabin_type',
+
     /** LOGS */
     LOGS: 'logs',
     ALL_LOGS: 'all_logs',
@@ -22,4 +26,13 @@ export const KEYS = {
 
     /** AIRPORTS */
     AIRPORTS: 'airports',
+
+    /** AIRCRAFTS */
+    AIRCRAFTS: 'aircrafts',
+
+    /** ROUTES */
+    ROUTES: 'routes',
+
+    /** SURVEYS */
+    SURVEYS: 'surveys'
 };

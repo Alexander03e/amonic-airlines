@@ -1,6 +1,6 @@
 import { KEYS } from 'Common/types/api';
 import { ShedulesApi } from './api';
-import { IFlightSchedule, ISearchSchedulesPayload, TScheduleRoutes } from 'Common/types/flights';
+import { IFlightSchedule, ISearchSchedulesPayload, IUpdateSchedule, TFlightShedulePayload, TScheduleRoutes } from 'Common/types/flights';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const schedulesApi = ShedulesApi.getInstance();
@@ -40,18 +40,61 @@ export const useUpdateSchedule = () => {
 };
 
 export const useScheduleRoutes = (data: ISearchSchedulesPayload) => {
-    // return useQuery<TScheduleRoutes[]>({
-    //     queryKey: [KEYS.SCHEDULE_ROUTES, data.arrivalAirport, data.date, data.departureAirport],
-    //     queryFn: async () => {
-    //         return await schedulesApi.getSchedulesByFilters(data);
-    //     },
-    // });
-
     return useMutation<TScheduleRoutes[], unknown, ISearchSchedulesPayload>({
-        
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         mutationFn: (data: ISearchSchedulesPayload) => schedulesApi.getSchedulesByFilters(data),
         mutationKey: [KEYS.SCHEDULE_ROUTES, data.arrivalAirport, data.date, data.departureAirport],
     });
 };
+
+export const useSchedulesBySearch = (data: Partial<ISearchSchedulesPayload>, shouldUpdate: boolean, onFinish: () => void) => {
+    return useQuery({
+        queryKey: [KEYS.FLIGHT_SCHEDULES],
+        queryFn: async () => {
+                onFinish()
+                return await schedulesApi.getSchedulesBySearch(data);
+        },
+        throwOnError: true,
+        enabled: !!shouldUpdate,
+    })
+}
+
+export const useUploadSchedules = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation<void | {status: number}, unknown, IUpdateSchedule[]>({
+        mutationFn: (data: IUpdateSchedule[]) => schedulesApi.uploadSchedules(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [KEYS.FLIGHT_SCHEDULES],
+            });
+        }
+    });
+}
+
+export const useRoutes = () => {
+
+    return useQuery({
+        queryKey: [KEYS.ROUTES],
+        queryFn: async () => {
+            return await schedulesApi.getRoutes();
+        }
+    })
+}
+
+
+
+export const useCreateSchedule = () => {
+    const queryClient = useQueryClient()
+    return useMutation<IFlightSchedule, unknown, TFlightShedulePayload>({
+        mutationFn: (data: TFlightShedulePayload) => schedulesApi.createSchedule(data),
+        onSuccess: (data: IFlightSchedule) => {
+            queryClient.setQueryData<IFlightSchedule[]>([KEYS.FLIGHT_SCHEDULES], oldData => {
+                if (!oldData) return [];
+
+                return [...oldData, data];
+            });
+        }
+    })
+}

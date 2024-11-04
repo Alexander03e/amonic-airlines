@@ -6,11 +6,12 @@ import { KEYS } from 'Common/types/api';
 const logsApi = LogsApi.getInstance();
 
 /** Хук изменения логов пользователя */
-export const useUserLogsUpdate = (): UseMutationResult<IUserLogs, Error, IUserLogPayload> => {
+export const useUserLogsUpdate = (): UseMutationResult<IUserLogs, Error, Partial<IUserLogPayload>> => {
     const queryClient = useQueryClient();
-    return useMutation<IUserLogs, Error, IUserLogPayload>({
+    
+    return useMutation<IUserLogs, Error, Partial<IUserLogPayload>>({
         mutationKey: [KEYS.LOGS],
-        mutationFn: async (data: IUserLogPayload) => {
+        mutationFn: async (data: Partial<IUserLogPayload>) => {
             return await logsApi.addUserLogs(data);
         },
         onSuccess: data => {
@@ -20,6 +21,22 @@ export const useUserLogsUpdate = (): UseMutationResult<IUserLogs, Error, IUserLo
         },
     });
 };
+
+export const useUserLogsUpdateById = () => {
+    const queryClient = useQueryClient()
+    return useMutation<IUserLogs, Error, Partial<IUserLogPayload>>({
+
+        mutationFn: async (data: Partial<IUserLogPayload>) => {
+            return await logsApi.updateUserLogs(data);
+        },
+        onSuccess: data => {
+            console.log(data)
+            queryClient.invalidateQueries({
+                queryKey: [KEYS.LOGS, data.user.id],
+            });
+        }
+    })
+}
 
 /** Хук для получения логов по айди пользователя */
 export const useUserLogs = (id: number | undefined) => {

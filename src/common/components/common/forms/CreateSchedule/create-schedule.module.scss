@@ -1,0 +1,35 @@
+.row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.info {
+    width: 100%;
+    padding: 16px;;
+
+    .row {
+
+        & > p {
+            color: var(--primary-base);
+
+            & > span {
+                margin-left: 4px;
+                color: var(--secondary-base);
+            }
+        }
+    }
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.bottom {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}

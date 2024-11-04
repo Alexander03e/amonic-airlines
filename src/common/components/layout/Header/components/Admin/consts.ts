@@ -11,4 +11,8 @@ export const LINKS = [
         label: 'Бронь',
         src: '/booking',
     },
+    {
+        label: 'Отчеты и опросы',
+        src: '/surveys'
+    }
 ];

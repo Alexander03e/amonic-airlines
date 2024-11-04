@@ -29,11 +29,11 @@ export class LogsApi {
         return (await this._httpInstance.get(`/userslogs`)).data;
     }
 
-    async updateUserLogs(data: IUserLogPayload): Promise<IUserLogs> {
-        return await this._httpInstance.put(`/userslogs`, { ...data });
+    async updateUserLogs(data: Partial<IUserLogPayload>): Promise<IUserLogs> {
+        return (await this._httpInstance.put(`/userslogs`, { ...data })).data;
     }
 
     async removeUserLogs(id: number) {
-        return await this._httpInstance.delete(`/userslogs/${id}`);
+        return (await this._httpInstance.delete(`/userslogs/${id}`)).data;
     }
 }

@@ -24,6 +24,7 @@ export const handleToastWithPromise = async (
     successMessage: string = 'Успешно',
     loadingMessage: string = 'Загрузка...',
     errorMessage: string = 'Произошла ошибка',
+    onSuccess?: () => void,
 ) => {
     const loadingToastId = toast.loading(loadingMessage);
 
@@ -35,6 +36,9 @@ export const handleToastWithPromise = async (
             autoClose: 1200,
             className: styles.success,
         });
+        if (onSuccess) {
+            onSuccess();
+        }
     } catch (e) {
         toast.update(loadingToastId, {
             render: errorMessage,

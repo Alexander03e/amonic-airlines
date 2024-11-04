@@ -32,7 +32,7 @@ export const ChangeUser = () => {
             email: userData.email,
             firstName: userData.firstName,
             lastName: userData.lastName,
-            office: userData.office.id,
+            office: String(userData.office.id),
             role: userData.role.id,
         },
     });

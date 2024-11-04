@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useUpdateSchedule } from 'Common/api/shedules/hooks';
 import { Button } from 'Common/components';
 import { Slide } from 'Common/components/ui/Animation';
 import { useScheduleStore, useUpdatedScheduleStore } from 'Common/store/schedule';
 import styles from './control-panel.module.scss';
 import { useModalStore } from 'Common/store/app/selectors';
-
+import UploadIcon from 'Assets/icons/upload.svg?react';
 export const ControlPanel = () => {
     const { setCurrentModal, setModalData } = useModalStore();
     const { currentSchedule, setCurrentSchedule } = useScheduleStore();
@@ -25,6 +26,10 @@ export const ControlPanel = () => {
         }
     };
 
+    const createSchedule = () => {
+        setCurrentModal('#createSchedule');
+    };
+
     const openEdit = () => {
         setCurrentModal('#changeschedule');
         setModalData(currentSchedule);
@@ -42,10 +47,17 @@ export const ControlPanel = () => {
         setSchedule(null);
     };
 
+    /** CSV PARSER */
+
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <Button label='Добавить рейс' variant='primary' />
+                <Button onClick={createSchedule} label='Добавить рейс' variant='primary' />
+                <Button
+                    label='Загрузить .csv файл'
+                    onClick={() => setCurrentModal('#csvImport')}
+                    icon={<UploadIcon />}
+                />
                 <Slide className={styles.wrapper} isOpen={!!currentSchedule}>
                     <Button onClick={updateSchedule} label={buttonTitle} />
                     <Button onClick={openEdit} variant='secondary' label='Изменить рейс' />

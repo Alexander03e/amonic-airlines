@@ -39,13 +39,11 @@ export interface IShortReport {
     CAI: number;
 }
 
-//Интерфейс для отдельного показателя из отчета
-interface ParamItem {
-    id: number;
-    name: string;
-}
-
-type TFullReport = ParamItem[][][];
+type TFullReport = {
+    [key: string]: {
+        [key: string]: IShortReport
+    }
+};
 
 //Тип опроса, который отправляем на сервер
 

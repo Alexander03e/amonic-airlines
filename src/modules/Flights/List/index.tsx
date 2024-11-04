@@ -1,6 +1,7 @@
-import { ReactElement, useEffect, useMemo } from 'react';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { ReactElement, useEffect, useMemo, useState } from 'react';
 import styles from './flights-list.module.scss';
-import { useFlightSchedules } from 'Common/api/shedules/hooks';
+import { useSchedulesBySearch } from 'Common/api/shedules/hooks';
 import { Table } from 'Common/components/ui/Table';
 import map from 'lodash/map';
 import { HEADER } from './list.consts';
@@ -8,15 +9,50 @@ import { Error, Loader } from 'Common/components';
 import size from 'lodash/size';
 import { Empty } from 'Common/components/ui/Empty';
 import { useScheduleStore, useUpdatedScheduleStore } from 'Common/store/schedule';
+import { KF } from 'Common/consts/common';
 
 export const FlightList = (): ReactElement => {
-    const { currentSchedule, setCurrentSchedule } = useScheduleStore();
+    const { currentSchedule, setCurrentSchedule, scheduleFilters, shoudUpdate, setShouldUpdate } =
+        useScheduleStore();
+
     const { schedules } = useUpdatedScheduleStore();
-    const { data: schedulesData, isLoading, isError } = useFlightSchedules();
+    const {
+        data: schedulesData,
+        isLoading,
+        isError,
+        refetch,
+    } = useSchedulesBySearch(
+        {
+            arrivalAirport: scheduleFilters.to ?? undefined,
+            departureAirport: scheduleFilters.from ?? undefined,
+            date: scheduleFilters.date ?? undefined,
+        },
+        true,
+        () => {},
+    );
+
+    const [filtered, setFiltered] = useState(schedulesData);
+
+    useEffect(() => {
+        setFiltered(schedulesData);
+
+        if (scheduleFilters.flightNumber) {
+            setFiltered(prev =>
+                prev?.filter(item => item.flightNumber === scheduleFilters.flightNumber),
+            );
+        }
+
+        setShouldUpdate(false);
+        console.log(scheduleFilters.sort);
+    }, [scheduleFilters.flightNumber, schedulesData, shoudUpdate]);
+
+    useEffect(() => {
+        refetch();
+    }, [shoudUpdate]);
 
     const rows = useMemo(
         () =>
-            map(schedulesData, item => {
+            map(filtered, item => {
                 const finded = schedules.find(schedule => schedule.id === item.id);
                 const findedItem = finded?.item;
 
@@ -29,19 +65,19 @@ export const FlightList = (): ReactElement => {
                           item.flightNumber,
                           item.aircraft.makeModel,
                           String(findedItem?.economyPrice),
-                          `${Math.round(Number(findedItem?.economyPrice) * 1.3)}$`,
-                          `${Math.round(Number(findedItem?.economyPrice) * 1.755)}$`,
+                          `${Math.round(Number(findedItem?.economyPrice) * KF.BUSINESS)}$`,
+                          `${Math.round(Number(findedItem?.economyPrice) * KF.FIRST)}$`,
                       ]
                     : [
-                          item.date,
-                          item.time,
-                          item.route.departureAirport.iatacode,
-                          item.route.arrivalAirport.iatacode,
-                          item.flightNumber,
-                          item.aircraft.makeModel,
-                          `${item.economyPrice}$`,
-                          `${Math.round(Number(item.economyPrice) * 1.3)}$`,
-                          `${Math.round(Number(item.economyPrice) * 1.755)}$`,
+                          item?.date,
+                          item?.time,
+                          item?.route?.departureAirport?.iatacode,
+                          item?.route?.arrivalAirport?.iatacode,
+                          item?.flightNumber,
+                          item?.aircraft?.makeModel,
+                          `${item?.economyPrice}$`,
+                          `${Math.round(Number(item?.economyPrice) * KF.BUSINESS)}$`,
+                          `${Math.round(Number(item?.economyPrice) * KF.FIRST)}$`,
                       ];
 
                 return {
@@ -51,7 +87,7 @@ export const FlightList = (): ReactElement => {
                     data: data,
                 };
             }),
-        [schedulesData, schedules],
+        [filtered, schedules],
     );
 
     /** Обнуление выбранного рейса при закрытии страницы */
@@ -86,12 +122,20 @@ export const FlightList = (): ReactElement => {
 
     return (
         <div className={styles.wrapper}>
-            <Table
-                activeRowId={currentSchedule?.id}
-                rowOnClick={selectRowHandler}
-                rows={rows}
-                header={HEADER}
-            />
+            {!isError ? (
+                <Table
+                    activeRowId={currentSchedule?.id}
+                    rowOnClick={selectRowHandler}
+                    rows={
+                        scheduleFilters?.flightNumber
+                            ? rows.filter(row => row.data[4] === scheduleFilters.flightNumber)
+                            : rows
+                    }
+                    header={HEADER}
+                />
+            ) : (
+                <p>Произошла ошибка при загрузке.</p>
+            )}
         </div>
     );
 };

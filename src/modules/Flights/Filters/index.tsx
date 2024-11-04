@@ -4,7 +4,6 @@ import { useScheduleStore } from 'Common/store/schedule';
 import { DateFilter } from './components/Date';
 import { FlightNumber } from './components/FlightNumber';
 import styles from './flight-filters.module.scss';
-import { Sort } from './components/Sort';
 import { Button, Height } from 'Common/components';
 
 export const Filters = (): ReactElement => {
@@ -33,6 +32,17 @@ export const Filters = (): ReactElement => {
 
     const openTitle = isOpen ? 'Закрыть фильтры' : 'Открыть фильтры';
 
+    const reset = () => {
+        updateScheduleFilters({
+            from: null,
+            date: null,
+            flightNumber: null,
+            sort: null,
+            to: null,
+        });
+        setShouldUpdate(true);
+    };
+
     return (
         <div className={styles.out}>
             <Button onClick={handleToggle} variant='empty' label={openTitle} />
@@ -41,8 +51,8 @@ export const Filters = (): ReactElement => {
                     <Airports />
                     <DateFilter />
                     <FlightNumber />
-                    <Sort />
                     <Button onClick={onSubmit} label='Применить' variant='secondary' />
+                    <Button onClick={reset} label='Сбросить' />
                 </div>
             </Height>
         </div>

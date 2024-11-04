@@ -27,14 +27,14 @@ export class SurveyApi {
     }
 
     async getReports(data: IGetReport): Promise<IShortReport> {
-        return (await this._httpInstance.get('/surveys/reports', { params: data})).data;
+        return (await this._httpInstance.post('/surveys/reports', data)).data;
     }
 
     async getFullReports(data: IGetReport): Promise<TFullReport> {
-        return (await this._httpInstance.get('/surveys/fullreports', { params: data})).data;
+        return (await this._httpInstance.post('/surveys/fullreports', data)).data;
     }
 
     async addSurveys(data: Array<TSurveyRegPayload>): Promise<Array<ISurvey>> {
-        return (await this._httpInstance.post('/surveys', {...data})).data;
+        return (await this._httpInstance.post('/surveys', data)).data;
     }
 }

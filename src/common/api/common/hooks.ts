@@ -32,3 +32,10 @@ export const useCabinTypes = () => {
         queryFn: async () => await commonApi.getCabinTypes(),
     });
 };
+
+export const useAircrafts = () => {
+    return useQuery({
+        queryKey: [KEYS.AIRCRAFTS],
+        queryFn: async () => await commonApi.getAircrafts()
+    })
+}

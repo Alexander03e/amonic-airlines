@@ -13,7 +13,7 @@ export const Airports = () => {
 
     const options = map(data, item => {
         return {
-            value: String(item.id),
+            value: String(item.iatacode),
             label: item.iatacode,
         };
     });

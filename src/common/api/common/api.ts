@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { ICabinType } from 'Common/types/flights';
+import { IAircraft, ICabinType } from 'Common/types/flights';
 import { IOffice } from 'Common/types/office';
 import { IRole } from 'Common/types/role';
 import { HttpInstanceFactory } from 'Common/utils/HttpInstanceFactory';
@@ -29,5 +29,9 @@ export class CommonApi {
 
     public async getCabinTypes(): Promise<ICabinType[]> {
         return (await this._httpInstance.get('/cabintypes')).data;
+    }
+
+    public async getAircrafts(): Promise<IAircraft[]> {
+        return (await this._httpInstance.get('/aircrafts')).data;
     }
 }

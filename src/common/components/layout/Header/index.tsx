@@ -15,6 +15,10 @@ import { Slide } from 'Common/components/ui/Animation';
 import { useUpdatedScheduleStore } from 'Common/store/schedule';
 import { handleToastWithPromise } from 'Common/components/ui/Toast';
 import ExitIcon from 'Assets/icons/exit.svg?react';
+import { useUploadSchedules } from 'Common/api/shedules/hooks';
+import { IUpdateSchedule } from 'Common/types/flights';
+import { useUserLogsUpdateById } from 'Common/api/logs/hooks';
+import { useUserStore } from 'Common/store/user';
 
 export const Header = () => {
     const { isAuth, logout, role } = useAuthContext();
@@ -22,12 +26,21 @@ export const Header = () => {
     const controls = useAnimation();
     const [headerOpened, setHeaderOpened] = useState(true);
     const { schedules, setSchedule } = useUpdatedScheduleStore();
+    const { mutateAsync } = useUploadSchedules();
     const location = window.location.pathname;
-
+    const { currentSessionId, setCurrentSessionId } = useUserStore();
+    const { mutateAsync: updateLogs } = useUserLogsUpdateById();
     const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
+        if (currentSessionId) {
+            updateLogs({
+                id: currentSessionId,
+                logOutTime: new Date().toISOString(),
+            });
+        }
+        setCurrentSessionId(null);
     };
 
     const handleRedirect = () => {
@@ -63,14 +76,27 @@ export const Header = () => {
         };
     }, [controls]);
 
-    const saveAll = () => {
-        const promise = new Promise(resolve => {
-            setTimeout(() => {
-                resolve('done');
-            }, 1000);
-        });
+    const saveAll = async () => {
+        const parsedSchedules: IUpdateSchedule[] = schedules.map(
+            item =>
+                ({
+                    action: item.id === 'NEW' ? 'ADD' : 'EDIT',
+                    aircraft: item.item.aircraft,
+                    arrivalAirport: item.item.arrivalAirport,
+                    date: item.item.date,
+                    confirmed: item.item.confirmed ? 'OK' : 'CANCEL',
+                    departureAirport: item.item.departureAirport,
+                    economyPrice: item.item.economyPrice,
+                    flightNumber: item.item.flightNumber,
+                    time: item.item.time,
+                } as IUpdateSchedule),
+        );
 
-        handleToastWithPromise(() => promise, 'Изменения сохранены', 'Сохранение изменений');
+        handleToastWithPromise(
+            () => mutateAsync(parsedSchedules),
+            'Изменения сохранены',
+            'Сохранение изменений',
+        );
 
         setSchedule(null);
     };

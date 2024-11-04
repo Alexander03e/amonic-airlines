@@ -8,7 +8,13 @@ export const useUserStore = create<IUserStore>()(
         immer(set => ({
             user: null,
             timeSpent: null,
+            currentSessionId: null,
 
+            setCurrentSessionId(time) {
+                set(state => {
+                    state.currentSessionId = time;
+                });
+            },
             setTimespent(time) {
                 set(state => {
                     state.timeSpent = time;

@@ -18,14 +18,14 @@ export interface IScheduleStore {
     updateScheduleFilters: (filters: Partial<IScheduleStore['scheduleFilters']>) => void;
 }
 
-interface IItem {
+export interface IUpdatedItem {
     id: number | 'NEW';
     item: IUpdateSchedule;
 }
 
 export interface IUpdatedScheduleStore {
-    schedules: IItem[];
+    schedules: IUpdatedItem[];
 
-    setSchedule: (data: IItem | null) => void;
+    setSchedule: (data: IUpdatedItem | null) => void;
     removeSchedule: (id: number) => void;
 }

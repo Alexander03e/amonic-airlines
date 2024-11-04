@@ -5,6 +5,10 @@ export type TCurrentModal =
     | '#changeschedule'
     | '#blockUser'
     | '#confirmPayment'
+    | '#csvImport'
+    | '#createSchedule'
+    | '#editTimeOut'
+    | '#uploadReports'
     | null;
 
 export interface IAppStore {

@@ -1,0 +1,24 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    margin-top: 20px;;
+    padding: 16px;
+
+    border: 1px solid var(--primary-base);
+    border-radius: 20px;
+}
+
+.tableItem {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.table {
+    height: 260px;
+
+    &:first-of-type {
+        height: 300px;
+    }
+}
