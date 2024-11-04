@@ -7,7 +7,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { schema, TCreateScheduleForm } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAircrafts } from 'Common/api/common/hooks';
-import { DevTool } from '@hookform/devtools';
 import { useCreateSchedule, useRoutes } from 'Common/api/shedules/hooks';
 export const CreateSchedule = (): ReactElement => {
     const { setCurrentModal, setModalData } = useModalStore();
@@ -66,7 +65,6 @@ export const CreateSchedule = (): ReactElement => {
             onSubmit={handleSubmit(onSubmit)}
             label={LABELS.FORM}
         >
-            <DevTool control={control} placement='top-right' />
             <div className={styles.inputs}>
                 <LabeledInput
                     error={errors.date?.message}

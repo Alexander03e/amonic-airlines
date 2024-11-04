@@ -42,6 +42,16 @@ export const DetailReport = () => {
         }
     });
 
+    const marks = [
+        'Мегакруто',
+        'Супер',
+        'Хорошо',
+        'Удовлетворительно',
+        'Плохо',
+        'Ужасно',
+        'Не знаю',
+    ];
+
     console.log(questions);
 
     return (
@@ -57,10 +67,12 @@ export const DetailReport = () => {
             {isPending && <Loader />}
             {isError && <Error />}
             {questions &&
-                questions.map((item, index) => {
+                questions.map(item => {
                     const options = Object.values(item?.data ?? []).map((item, i) => {
+                        const elData = Object.values(item).map(el => el);
+                        elData.unshift(marks[i]);
                         return {
-                            data: Object.values(item).map(el => el),
+                            data: elData,
                             id: i + 1,
                         };
                     });
@@ -70,20 +82,14 @@ export const DetailReport = () => {
                     const itemData = item?.data && Object.values(item?.data);
 
                     if (itemData) {
-                        console.log(itemData[0]);
                         header = Object.keys(itemData[0]);
+                        header.unshift('Оценка');
                     }
-
-                    console.log(header);
 
                     return (
                         <div className={styles.tableItem}>
                             <p>{item?.label}</p>
-                            <Table
-                                header={index === 0 && header ? header : undefined}
-                                className={styles.table}
-                                rows={options}
-                            />
+                            <Table header={header} className={styles.table} rows={options} />
                         </div>
                     );
                 })}
